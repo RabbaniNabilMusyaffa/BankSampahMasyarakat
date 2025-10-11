@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class Auth extends Controller
 {
@@ -18,6 +19,22 @@ class Auth extends Controller
     public function registerIndex()
     {
         return view('auth.register');
+    }
+
+    public function login(Request $request): RedirectResponse
+    {
+        $user = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('home')->with('message', 'Berhasil Login');
+
+        return back()->withErrors([
+            'email' => 'Data tidak cocok'
+        ])->onlyInput('email');
     }
 
     /**

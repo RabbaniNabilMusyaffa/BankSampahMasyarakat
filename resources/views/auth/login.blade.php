@@ -128,7 +128,8 @@
 
         <!-- Login Form -->
         <div id="loginForm">
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('auth') }}" enctype="multipart/form-data">
+                @csrf  
                 <div class="form-group">
                     <label for="email">Masukan Email</label>
                     <input 
