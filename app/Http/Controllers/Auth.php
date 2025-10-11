@@ -10,9 +10,14 @@ class Auth extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function loginIndex()
     {
         return view('auth.login');
+    }
+
+    public function registerIndex()
+    {
+        return view('auth.register');
     }
 
     /**
