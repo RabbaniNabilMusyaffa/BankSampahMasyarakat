@@ -201,7 +201,7 @@
             <div class="text-center mt-8">
                 <p class="text-gray-600">
                     Belum punya akun? 
-                    <a href="" class="font-bold text-purple-600 hover:text-purple-700 transition-colors">
+                    <a href="{{route('register')}}" class="font-bold text-purple-600 hover:text-purple-700 transition-colors">
                         Daftar sekarang
                     </a>
                 </p>
