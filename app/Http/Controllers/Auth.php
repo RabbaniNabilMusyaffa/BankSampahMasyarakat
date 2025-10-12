@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
+
 class Auth extends Controller
 {
     /**
@@ -16,12 +17,11 @@ class Auth extends Controller
         return view('auth.login');
     }
 
-    public function registerIndex()
+    public function registrationIndex()
     {
         return view('auth.register');
     }
-
-    public function login(Request $request): RedirectResponse
+ public function login(Request $request): RedirectResponse
     {
         $user = $request->validate([
             'email' => 'required|email',
