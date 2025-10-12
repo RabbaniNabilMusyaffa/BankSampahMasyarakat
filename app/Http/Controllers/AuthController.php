@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-
-class Auth extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,16 +23,18 @@ class Auth extends Controller
     {
         return view('auth.register');
     }
- public function login(Request $request): RedirectResponse
+    public function login(Request $request): RedirectResponse
     {
         $user = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
+        if (Auth::attempt($user)) {
             $request->session()->regenerate();
 
             return redirect()->intended('home')->with('message', 'Berhasil Login');
+        }
 
         return back()->withErrors([
             'email' => 'Data tidak cocok'

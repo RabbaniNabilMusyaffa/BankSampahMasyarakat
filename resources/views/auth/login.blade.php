@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Login - Bank Sampah</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
         body {
             background: linear-gradient(135deg, #234cff 0%, #0ad3ff 100%);
@@ -119,12 +120,25 @@
     </style>
 </head>
 <body>
+                    
     <div class="card">
+        {{-- validasi error --}}
+        <div class="card-body p-0">
+                        @if (count($errors) > 0)
+                        <div class="alert alert-danger mt-2">
+                          <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{$error}}</li>
+                          @endforeach
+                        </ul>
+                        </div>
+                      @endif
         <!-- Tab Navigation -->
         <div class="tab-container">
             <button class="tab-button active" id="loginTab">Login</button>
             <button class="tab-button" id="registerTab">Daftar</button>
         </div>
+
 
         <!-- Login Form -->
         <div id="loginForm">
