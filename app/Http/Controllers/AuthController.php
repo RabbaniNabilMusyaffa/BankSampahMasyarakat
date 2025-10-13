@@ -23,7 +23,29 @@ class AuthController extends Controller
     {
         return view('auth.register');
     }
-    public function login(Request $request): RedirectResponse
+
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+        ]);
+
+
+
+        // Buat user baru dengan hashing password
+        $user = new \App\Models\User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password); // Hashing password
+        $user->save();
+
+        return redirect()->back()->with('success', 'Registrasi berhasil. Silakan login.');
+    }
+
+    public function login(Request $request)
     {
         $user = $request->validate([
             'email' => 'required|email',
@@ -32,6 +54,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($user)) {
             $request->session()->regenerate();
+            $user = Auth::user();
 
             return redirect()->intended('dash')->with('message', 'Berhasil Login');
         }
@@ -52,11 +75,6 @@ class AuthController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      */

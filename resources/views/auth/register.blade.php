@@ -16,7 +16,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
         }
-        
+
         .card {
             background: white;
             border-radius: 20px;
@@ -26,14 +26,14 @@
             max-width: 450px;
             min-height: 520px;
         }
-        
+
         .tab-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 35px;
         }
-        
+
         .tab-button {
             padding: 14px 20px;
             border-radius: 12px;
@@ -45,13 +45,13 @@
             color: #64748b;
             font-size: 15px;
         }
-        
+
         .tab-button.active {
             background: linear-gradient(135deg, #234cff 0%, #0ad3ff 100%);
             color: white;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
-        
+
         .input-field {
             width: 100%;
             padding: 16px 20px;
@@ -61,12 +61,12 @@
             transition: all 0.3s ease;
             outline: none;
         }
-        
+
         .input-field:focus {
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
         }
-        
+
         .btn-primary {
             width: 100%;
             padding: 16px;
@@ -79,12 +79,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
         }
-        
+
         .link-text {
             background: linear-gradient(135deg, #234cff 0%, #0ad3ff 100%);
             -webkit-background-clip: text;
@@ -94,11 +94,11 @@
             font-weight: 600;
             font-size: 14px;
         }
-        
+
         .link-text:hover {
             text-decoration: underline;
         }
-        
+
         label {
             display: block;
             margin-bottom: 10px;
@@ -106,7 +106,7 @@
             font-weight: 500;
             font-size: 15px;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
         }
@@ -128,28 +128,34 @@
 
         <!-- Register Form -->
         <div id="registerForm">
-            <form method="POST" action="{{ route('register') }}">
+            @if (session()->has('success'))
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 my-4" role="alert">
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
+            <form method="POST" action="{{ route('registrasi') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="form-group">
                     <label for="nama_lengkap">Nama lengkap</label>
-                    <input 
-                        type="text" 
-                        id="nama_lengkap" 
-                        name="nama_lengkap" 
-                        class="input-field" 
+                    <input
+                        type="text"
+                        id="nama_lengkap"
+                        name="name"
+                        class="input-field"
                         placeholder="Nama lengkap"
                         value="{{ old('nama_lengkap') }}"
-                        required 
+                        required
                         autofocus
                     >
                 </div>
 
                 <div class="form-group">
                     <label for="email">Masukan Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        class="input-field" 
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="input-field"
                         placeholder="Masukan Email"
                         value="{{ old('email') }}"
                         required
@@ -158,11 +164,11 @@
 
                 <div class="form-group">
                     <label for="password">Masukan Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="input-field" 
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="input-field"
                         placeholder="Masukan Password"
                         required
                     >
@@ -170,11 +176,11 @@
 
                 <div class="form-group">
                     <label for="password_confirmation">Ulangi password</label>
-                    <input 
-                        type="password" 
-                        id="password_confirmation" 
-                        name="password_confirmation" 
-                        class="input-field" 
+                    <input
+                        type="password"
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        class="input-field"
                         placeholder="Ulangi password"
                         required
                     >
@@ -192,11 +198,11 @@
     <script>
         const loginTab = document.getElementById('loginTab');
         const registerTab = document.getElementById('registerTab');
-        
+
         loginTab.addEventListener('click', function() {
             window.location.href = '{{ route("login") }}';
         });
-        
+
         registerTab.addEventListener('click', function() {
             registerTab.classList.add('active');
             loginTab.classList.remove('active');

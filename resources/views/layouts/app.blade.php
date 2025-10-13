@@ -13,9 +13,9 @@
         <div class="sidebar-header">
             <div class="logo-container">
                 <div class="logo-icon">🌱</div>
-                <div class="logo-text">Bank Sampah</div>
+                <div class="logo-text">EcoBank</div>
             </div>
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+          <button class="toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
         </div>
 
         <div class="sidebar-menu">

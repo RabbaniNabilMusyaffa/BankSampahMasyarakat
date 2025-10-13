@@ -17,7 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
         }
-        
+
         .card {
             background: white;
             border-radius: 20px;
@@ -27,14 +27,14 @@
             max-width: 250px;
             min-height: 420px;
         }
-        
+
         .tab-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 35px;
         }
-        
+
         .tab-button {
             padding: 14px 20px;
             border-radius: 12px;
@@ -46,13 +46,13 @@
             color: #64748b;
             font-size: 15px;
         }
-        
+
         .tab-button.active {
             background: linear-gradient(135deg, #234cff 0%, #0ad3ff 100%);
             color: white;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
-        
+
         .input-field {
             width: 100%;
             padding: 16px 20px;
@@ -62,12 +62,12 @@
             transition: all 0.3s ease;
             outline: none;
         }
-        
+
         .input-field:focus {
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
-        
+
         .btn-primary {
             width: 100%;
             padding: 16px;
@@ -80,12 +80,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
         }
-        
+
         .link-text {
             background: linear-gradient(135deg, #234cff 0%, #0ad3ff 100%);
             -webkit-background-clip: text;
@@ -95,11 +95,11 @@
             font-weight: 600;
             font-size: 14px;
         }
-        
+
         .link-text:hover {
             text-decoration: underline;
         }
-        
+
         label {
             display: block;
             margin-bottom: 10px;
@@ -107,7 +107,7 @@
             font-weight: 500;
             font-size: 15px;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
         }
@@ -120,7 +120,7 @@
     </style>
 </head>
 <body>
-                    
+
     <div class="card">
         {{-- validasi error --}}
         <div class="card-body p-0">
@@ -143,28 +143,28 @@
         <!-- Login Form -->
         <div id="loginForm">
             <form method="POST" action="{{ route('auth') }}" enctype="multipart/form-data">
-                @csrf  
+                @csrf
                 <div class="form-group">
                     <label for="email">Masukan Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        class="input-field" 
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="input-field"
                         placeholder="Masukan Email"
                         value="{{ old('email') }}"
-                        required 
+                        required
                         autofocus
                     >
                 </div>
 
                 <div class="form-group">
                     <label for="password">Masukan Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="input-field" 
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="input-field"
                         placeholder="Masukan Password"
                         required
                     >
@@ -186,11 +186,11 @@
     <script>
         const loginTab = document.getElementById('loginTab');
         const registerTab = document.getElementById('registerTab');
-        
+
         registerTab.addEventListener('click', function() {
             window.location.href = '{{ route("register") }}';
         });
-        
+
         loginTab.addEventListener('click', function() {
             loginTab.classList.add('active');
             registerTab.classList.remove('active');
