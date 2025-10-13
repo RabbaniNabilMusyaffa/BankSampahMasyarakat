@@ -21,3 +21,4 @@ Route::get('/home', [App\Http\Controllers\PelangganController::class, 'index'])-
 Route::get('/penarikan', [App\Http\Controllers\PelangganController::class, 'penarikan'])->name('penarikan');
 Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
 Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
