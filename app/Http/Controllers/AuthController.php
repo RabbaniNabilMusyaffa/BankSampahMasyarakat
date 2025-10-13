@@ -45,7 +45,7 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Registrasi berhasil. Silakan login.');
     }
 
-    public function login(Request $request): RedirectResponse
+    public function login(Request $request)
     {
         $user = $request->validate([
             'email' => 'required|email',
@@ -54,6 +54,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($user)) {
             $request->session()->regenerate();
+            $user = Auth::user();
 
             return redirect()->intended('dash')->with('message', 'Berhasil Login');
         }
