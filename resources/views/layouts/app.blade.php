@@ -12,7 +12,10 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo-container">
-                <div class="logo-icon">🌱</div>
+               <div class="logo-icon">
+    <img src ="{{asset('img/logo-icon.png')}}" 
+        style="width: 65px; height: auto;">
+</div>
                 <div class="logo-text">EcoBank</div>
             </div>
           <button class="toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>

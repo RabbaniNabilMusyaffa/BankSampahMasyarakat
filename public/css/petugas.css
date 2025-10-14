@@ -240,7 +240,7 @@ body {
 
 /* ========== SECTIONS ========== */
 .section {
-    display: ;
+    display: none;
     animation: fadeIn 0.4s ease-in-out;
 }
 
@@ -287,17 +287,6 @@ body {
 .stat-card.blue { border-color: #4299e1; }
 .stat-card.orange { border-color: #ed8936; }
 
-.stat-card::before {
-    content: '';
-    position: absolute;
-    right: -40px;
-    top: -40px;
-    width: 120px;
-    height: 120px;
-    background: currentColor;
-    opacity: 0.05;
-    border-radius: 50%;
-}
 
 .stat-header {
     display: flex;

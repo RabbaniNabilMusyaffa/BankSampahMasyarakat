@@ -19,7 +19,13 @@
                     <div class="stat-value">{{ $totalTransaksi ?? 0 }}</div>
                     <div class="stat-label">Total transaksi</div>
                 </div>
-                <div class="stat-icon">📊</div>
+                <div class="stat-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="18" width="5" height="10" rx="1" fill="#4299e1"/>
+            <rect x="13.5" y="12" width="5" height="16" rx="1" fill="#48bb78"/>
+            <rect x="21" y="6" width="5" height="22" rx="1" fill="#ed8936"/>
+    </svg>
+</div>
             </div>
         </div>
 
@@ -41,7 +47,21 @@
                     <div class="stat-value">{{ $totalPenarikan ?? 0 }}</div>
                     <div class="stat-label">Menunggu validasi</div>
                 </div>
-                <div class="stat-icon">⏳</div>
+              <div class="stat-icon">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Frame Atas -->
+        <rect x="8" y="4" width="16" height="3" rx="1" fill="#805ad5"/>
+        <!-- Bagian Atas Hourglass -->
+        <path d="M9 7 L16 16 L23 7 Z" fill="#9f7aea"/>
+        <!-- Bagian Bawah Hourglass -->
+        <path d="M9 25 L16 16 L23 25 Z" fill="#b794f4"/>
+        <!-- Frame Bawah -->
+        <rect x="8" y="25" width="16" height="3" rx="1" fill="#805ad5"/>
+        <!-- Pasir Jatuh -->
+        <circle cx="16" cy="20" r="2" fill="#d6bcfa"/>
+        <circle cx="16" cy="23" r="1.5" fill="#d6bcfa"/>
+    </svg>
+</div>
             </div>
         </div>
     </div>
