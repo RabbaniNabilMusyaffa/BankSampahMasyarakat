@@ -13,6 +13,7 @@ Route::get('/', [App\Http\Controllers\AuthController::class, 'loginIndex'])->nam
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('auth');
 Route::post('/registrasi', [App\Http\Controllers\AuthController::class, 'store'])->name('registrasi');
 
+
 Route::get('/regist', [App\Http\Controllers\AuthController::class, 'registrationIndex'])->name('register');
 
 Route::middleware(['auth', 'Petugas'])->group(function () {
@@ -28,3 +29,5 @@ Route::middleware(['auth', 'Pelanggan'])->group(function () {
     Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
     Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
 });
+=======
+
