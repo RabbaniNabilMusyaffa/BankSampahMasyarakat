@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengaturan Akun - Bank Sampah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{{asset('css/pelanggan.css')}}">
+
+    <link rel="stylesheet" href="{{ asset('css/pelanggan.css') }}">
 </head>
 <body>
     <div class="app-container">
@@ -167,6 +167,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="{{ asset('javascript/pelanggan.js') }}"></script>
 </body>
 </html>

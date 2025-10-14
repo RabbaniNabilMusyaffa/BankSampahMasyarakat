@@ -115,6 +115,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="{{ asset('javascript/pelanggan.js') }}"></script>
 </body>
 </html>
