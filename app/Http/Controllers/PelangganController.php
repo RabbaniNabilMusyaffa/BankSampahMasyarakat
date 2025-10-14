@@ -11,4 +11,16 @@ class PelangganController extends Controller
     {
         return view('page_pelanggan/home');
     }
+    public function riwayat()
+    {
+        return view('page_pelanggan/riwayat');
+    }
+    public function penarikan()
+    {
+        return view('page_pelanggan/penarikan');
+    }
+    public function pengaturan()
+    {
+        return view('page_pelanggan/pengaturan');
+    }
 }

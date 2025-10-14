@@ -18,4 +18,7 @@ Route::get('/validasi', [App\Http\Controllers\PetugasController::class, 'validas
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('auth');
 Route::post('/registrasi', [App\Http\Controllers\AuthController::class, 'store'])->name('registrasi');
 Route::get('/home', [App\Http\Controllers\PelangganController::class, 'index'])->name('home');
-
+Route::get('/penarikan', [App\Http\Controllers\PelangganController::class, 'penarikan'])->name('penarikan');
+Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
+Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
