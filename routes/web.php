@@ -12,6 +12,8 @@ use App\Http\Controllers\PelangganController;
 Route::get('/', [App\Http\Controllers\AuthController::class, 'loginIndex'])->name('login');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('auth');
 Route::post('/registrasi', [App\Http\Controllers\AuthController::class, 'store'])->name('registrasi');
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
 
 
 Route::get('/regist', [App\Http\Controllers\AuthController::class, 'registrationIndex'])->name('register');
@@ -29,5 +31,4 @@ Route::middleware(['auth', 'Pelanggan'])->group(function () {
     Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
     Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
 });
-=======
 

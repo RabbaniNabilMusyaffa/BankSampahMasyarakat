@@ -19,7 +19,7 @@
                 <div class="page-header">
                     <div>
                         <h1 class="page-title">Dashboard</h1>
-                        <p class="page-subtitle">Selamat datang kembali, Budi! 👋</p>
+                        <p class="page-subtitle">Selamat datang kembali, {{ auth()->user()->name ?? 'Budi Santoso' }}! 👋</p>
                     </div>
                     <div class="header-date">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
