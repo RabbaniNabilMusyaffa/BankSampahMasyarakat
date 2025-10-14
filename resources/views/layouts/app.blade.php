@@ -66,9 +66,11 @@
                 </span>
                 <span class="menu-text">Transaksi Hari Ini</span>
             </a>
-        </div>
 
-        <div class="logout-item">
+            <!-- PEMBATAS / SEPARATOR -->
+            <div style="margin: 20px 15px; height: 1px; background-color: rgba(255, 255, 255, 0.15);"></div>
+
+            <!-- LOGOUT -->
             <a href="#" class="menu-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <span class="menu-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -77,7 +79,7 @@
                         <line x1="21" y1="12" x2="9" y2="12"></line>
                     </svg>
                 </span>
-                <span class="menu-text">Logout</span>
+                <span class="menu-text">Keluar</span>
             </a>
             <form id="logout-form" action="{{ route('logout')}}" method="GET" style="display: none;">
                 @csrf
