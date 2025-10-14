@@ -161,6 +161,19 @@
                         required
                     >
                 </div>
+                
+                <div class="form-group">
+                    <label for="role">Berikan Role</label>
+                    <input
+                        type="text"
+                        id="role"
+                        name="role"
+                        class="input-field"
+                        placeholder="Berikan Role"
+                        value="{{ old('role') }}"
+                        required
+                    >
+                </div>
 
                 <div class="form-group">
                     <label for="password">Masukan Password</label>

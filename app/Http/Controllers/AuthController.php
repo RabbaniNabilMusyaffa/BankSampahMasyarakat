@@ -31,6 +31,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+            'role' => 'required',
         ]);
 
 
@@ -39,7 +40,8 @@ class AuthController extends Controller
         $user = new \App\Models\User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password); // Hashing password
+        $user->password = bcrypt($request->password);
+        $user->role = $request->role;
         $user->save();
 
         return redirect()->back()->with('success', 'Registrasi berhasil. Silakan login.');
@@ -56,7 +58,17 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
 
-            return redirect()->intended('dash')->with('message', 'Berhasil Login');
+            switch ($user->role) {
+                // case 'admin':
+                //     return redirect()->route()->with('message', 'Selamat datang, Admin!');
+                case 'petugas':
+                    return redirect()->route('dash_petugas')->with('message', 'Berhasil login sebagai Petugas');
+                case 'pelanggan':
+                    return redirect()->route('home')->with('message', 'Selamat datang, Pelanggan!');
+                default:
+                    Auth::logout();
+                    return redirect()->back()->withErrors(['role' => 'Role tidak dikenali.']);
+            }
         }
 
         return back()->withErrors([
