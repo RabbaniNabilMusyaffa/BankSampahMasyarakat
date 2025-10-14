@@ -123,6 +123,26 @@
 
 @push('scripts')
 <script>
+// Fungsi untuk menampilkan modal
+function showModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+// Fungsi untuk menutup modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+    // Reset form jika perlu
+    document.querySelector('#' + modalId + ' form').reset();
+    document.getElementById('totalDisplay').style.display = 'none';
+}
+
+// Tutup modal jika klik di luar modal content
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+}
+
 // Override fungsi hitungTotal untuk Laravel
 function hitungTotal() {
     const kategoriSelect = document.getElementById('kategori');
