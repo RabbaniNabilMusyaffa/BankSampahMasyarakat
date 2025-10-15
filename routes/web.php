@@ -31,4 +31,3 @@ Route::middleware(['auth', 'Pelanggan'])->group(function () {
     Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
     Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
 });
-
