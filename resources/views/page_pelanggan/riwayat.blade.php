@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Setoran - Bank Sampah</title>
-    
+
     <link rel="stylesheet" href="{{asset('css/pelanggan.css')}}">
 </head>
 <body>
@@ -18,7 +18,7 @@
                     <p class="page-subtitle">Lihat semua transaksi setoran sampah Anda</p>
                 </div>
 
-                <!-- Search & Filter -->
+                {{-- search filter --}}
                 <div class="search-filter-container">
                     <div class="search-box">
                         <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
                     </select>
                 </div>
 
-                <!-- Data Table -->
+                {{-- tabel data --}}
                 <div class="data-table-container">
                     <table class="data-table">
                         <thead>
@@ -51,11 +51,7 @@
                                 <td>10 Oktober 2025</td>
                                 <td>
                                     <div class="table-item-name">
-                                        <div class="table-item-icon table-item-icon-green">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                            </svg>
-                                        </div>
+
                                         <span>Botol Plastik</span>
                                     </div>
                                 </td>
@@ -70,11 +66,7 @@
                                 <td>8 Oktober 2025</td>
                                 <td>
                                     <div class="table-item-name">
-                                        <div class="table-item-icon table-item-icon-green">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                            </svg>
-                                        </div>
+
                                         <span>Kardus</span>
                                     </div>
                                 </td>
@@ -89,11 +81,7 @@
                                 <td>5 Oktober 2025</td>
                                 <td>
                                     <div class="table-item-name">
-                                        <div class="table-item-icon table-item-icon-green">
-                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                            </svg>
-                                        </div>
+
                                         <span>Kaleng Aluminium</span>
                                     </div>
                                 </td>

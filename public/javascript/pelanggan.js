@@ -1,13 +1,10 @@
-// ==================== SCRIPT.JS - Bank Sampah Interactive Features ====================
-
 document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
     const openBtn = document.getElementById('openSidebar');
     const closeBtn = document.getElementById('closeSidebar');
 
-    // ======================================================= //
-    // == LOGIKA BARU UNTUK DESKTOP TOGGLE DITAMBAHKAN DI SINI == //
+
     const desktopToggleButton = document.getElementById('desktopToggle');
 
     if (desktopToggleButton) {
@@ -15,10 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
             sidebar.classList.toggle('collapsed');
         });
     }
-    // ======================================================= //
 
 
-    // Open sidebar on mobile
+    // Open sidebar mobile
     if (openBtn) {
         openBtn.addEventListener('click', function() {
             sidebar.classList.add('mobile-open'); // Menggunakan class khusus mobile
@@ -27,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Fungsi untuk menutup sidebar (dipakai oleh beberapa event)
+    // Fungsi untuk menutup sidebar
     function closeSidebar() {
         sidebar.classList.remove('mobile-open');
         overlay.classList.remove('active');
@@ -39,19 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
         closeBtn.addEventListener('click', closeSidebar);
     }
 
-    // Close on overlay click
+    // Close overlay click
     if (overlay) {
         overlay.addEventListener('click', closeSidebar);
     }
 
-    // Close sidebar on escape key
+    // Close sidebar escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && sidebar.classList.contains('mobile-open')) {
             closeSidebar();
         }
     });
 
-    // === Active Navigation Highlighting ===
     const navItems = document.querySelectorAll('.nav-item');
     const currentPath = window.location.pathname;
 
@@ -63,13 +58,13 @@ document.addEventListener('DOMContentLoaded', function() {
             item.classList.remove('active');
         }
     });
-    // Jika di halaman utama, pastikan dashboard tetap aktif
+
     if (currentPath === '/') {
         document.querySelector('a[href*="home"]').classList.add('active');
     }
 
 
-    // === Search Functionality ===
+    // helper
     const searchInput = document.querySelector('.search-input');
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
@@ -86,12 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-
-    // ... (SISA KODE ANDA YANG LAIN SAMA SEPERTI SEBELUMNYA) ...
-    // ... (Copy-paste sisa kode Anda dari sini ke bawah) ...
-
-
-
 
     // === Filter Functionality ===
     const filterSelect = document.querySelector('.filter-select');
@@ -115,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // === Detail Button Click Handler ===
+    // Detail Button Click Handler
     const detailButtons = document.querySelectorAll('.btn-detail');
     detailButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -133,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // === Withdrawal Form Validation ===
+    // Withdrawal Form Validation
     const withdrawalForm = document.querySelector('.withdrawal-form');
     if (withdrawalForm) {
         withdrawalForm.addEventListener('submit', function(e) {
@@ -160,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // === Settings Form Handler ===
+    // Settings Form Handler
     const settingsForm = document.querySelector('.settings-form');
     if (settingsForm) {
         settingsForm.addEventListener('submit', function(e) {
@@ -169,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // === Toggle Switch Handler ===
+    // Toggle Switch Handler
     const toggleInputs = document.querySelectorAll('.toggle-input');
     toggleInputs.forEach(toggle => {
         toggle.addEventListener('change', function() {
@@ -179,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // === Animation on Scroll ===
+    // Animation on Scroll
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -206,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.stat-card, .transaction-card, .settings-card');
     cards.forEach(card => observer.observe(card));
 
-    // === Number Formatting for Currency ===
+    // Number Formatting for Currency
     const currencyElements = document.querySelectorAll('.stat-value, .balance-amount, .transaction-amount p, .table-amount');
     currencyElements.forEach(element => {
         const text = element.textContent;
@@ -219,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // === Real-time Date Display ===
+    // Real-time Date Display
     updateDateTime();
     setInterval(updateDateTime, 60000); // Update every minute
 
@@ -237,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // === Smooth Scroll for Internal Links ===
+    // Smooth Scroll for Internal Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -252,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// === Helper Functions ===
+// Helper Functions
 
 // Show Detail Modal
 function showDetailModal(data) {
@@ -455,7 +444,7 @@ function showNotification(message, type = 'info') {
     }
 }
 
-// === Chart Data Preparation (for future implementation) ===
+// Chart Data Preparation
 function prepareChartData() {
     const setoranData = [
         { month: 'Jan', value: 45 },
@@ -473,7 +462,7 @@ function prepareChartData() {
     return setoranData;
 }
 
-// === Export Data Function ===
+// Export Data Function
 function exportToCSV() {
     const table = document.querySelector('.data-table');
     if (!table) return;
@@ -507,12 +496,12 @@ function exportToCSV() {
     showNotification('Data berhasil diexport!', 'success');
 }
 
-// === Print Function ===
+//Print Function
 function printPage() {
     window.print();
 }
 
-// === Local Storage Functions ===
+// Local Storage Functions
 // Save user preferences
 function savePreference(key, value) {
     try {
@@ -534,7 +523,7 @@ function getPreference(key, defaultValue = null) {
     }
 }
 
-// === Format Number to Indonesian Currency ===
+// Format Number to Indonesian Currency
 function formatCurrency(amount) {
     return new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -543,7 +532,7 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 
-// === Format Date to Indonesian ===
+// Format Date to Indonesian
 function formatDate(date) {
     return new Date(date).toLocaleDateString('id-ID', {
         day: 'numeric',
@@ -552,19 +541,19 @@ function formatDate(date) {
     });
 }
 
-// === Validate Email ===
+// Validate Email
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
 
-// === Validate Phone Number (Indonesian format) ===
+// validasi nomor
 function validatePhone(phone) {
     const re = /^(\+62|62|0)[0-9]{9,12}$/;
     return re.test(phone.replace(/[\s-]/g, ''));
 }
 
-// === Debounce Function for Search ===
+// Debounce Function for Search
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -577,14 +566,14 @@ function debounce(func, wait) {
     };
 }
 
-// === Copy to Clipboard ===
+// Copy to Clipboard
 function copyToClipboard(text) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
             showNotification('Disalin ke clipboard!', 'success');
         });
     } else {
-        // Fallback for older browsers
+
         const textarea = document.createElement('textarea');
         textarea.value = text;
         textarea.style.position = 'fixed';
@@ -597,7 +586,7 @@ function copyToClipboard(text) {
     }
 }
 
-// === Loading Spinner ===
+//Loading Spinner
 function showLoading() {
     const loader = document.createElement('div');
     loader.id = 'loader';
@@ -642,7 +631,7 @@ function hideLoading() {
     }
 }
 
-// === Confirm Dialog ===
+// Confirm Dialog
 function confirmDialog(message, onConfirm, onCancel) {
     const dialog = document.createElement('div');
     dialog.style.cssText = `
@@ -703,7 +692,7 @@ function confirmDialog(message, onConfirm, onCancel) {
     });
 }
 
-// === Initialize Tooltips ===
+// Initialize Tooltips
 function initTooltips() {
     const elements = document.querySelectorAll('[data-tooltip]');
 
@@ -743,7 +732,7 @@ function initTooltips() {
     });
 }
 
-// === Auto-save Form Data ===
+// Auto-save Form Data
 function enableAutoSave(formSelector) {
     const form = document.querySelector(formSelector);
     if (!form) return;
@@ -764,7 +753,7 @@ function enableAutoSave(formSelector) {
     });
 }
 
-// === Initialize all tooltips on page load ===
+// Initialize all tooltips on page load
 window.addEventListener('load', () => {
     initTooltips();
 });
@@ -778,7 +767,7 @@ window.addEventListener('offline', () => {
     showNotification('Tidak ada koneksi internet', 'error');
 });
 
-// === Handle Form Submit with Loading ===
+// Handle Form Submit with Loading
 document.addEventListener('submit', function(e) {
     if (e.target.matches('form')) {
         const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -792,7 +781,6 @@ document.addEventListener('submit', function(e) {
                 Memproses...
             `;
 
-            // Re-enable after 3 seconds (adjust based on your needs)
             setTimeout(() => {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Simpan';

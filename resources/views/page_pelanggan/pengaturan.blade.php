@@ -18,7 +18,7 @@
                     <p class="page-subtitle">Kelola akun dan preferensi Anda</p>
                 </div>
 
-                <!-- Profile Section -->
+                {{-- profile --}}
                 <div class="settings-card">
                     <h3 class="section-title">Informasi Profile</h3>
                     <div class="profile-section">
@@ -62,7 +62,7 @@
                     </form>
                 </div>
 
-                <!-- Security Section -->
+                {{-- keamanan --}}
                 <div class="settings-card">
                     <h3 class="section-title">Keamanan</h3>
                     <div class="settings-list">
@@ -98,7 +98,7 @@
                     </div>
                 </div>
 
-                <!-- Notifications -->
+                {{-- notif --}}
                 <div class="settings-card">
                     <h3 class="section-title">Notifikasi</h3>
                     <div class="settings-list">
@@ -143,7 +143,7 @@
                     </div>
                 </div>
 
-                <!-- Danger Zone -->
+                {{-- peringatan --}}
                 <div class="settings-card settings-card-danger">
                     <h3 class="section-title text-red-600">Zona Berbahaya</h3>
                     <div class="settings-list">

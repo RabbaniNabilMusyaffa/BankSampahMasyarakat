@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
+        {{-- sidebar --}}
         @include('navbar.navigation')
 
-        <!-- Main Content -->
+        {{-- konten --}}
         <main class="main-content">
             <div class="content-wrapper">
-                <!-- Page Header -->
+
                 <div class="page-header">
                     <div>
                         <h1 class="page-title">Dashboard</h1>
@@ -29,9 +29,9 @@
                     </div>
                 </div>
 
-                <!-- Stats Cards -->
+                {{-- cards --}}
                 <div class="stats-grid">
-                    <!-- Total Setoran -->
+                    {{-- total setoran --}}
                     <div class="stat-card stat-card-blue">
                         <div class="stat-header">
                             <div class="stat-icon stat-icon-blue">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
 
-                    <!-- Pendapatan Bulan Ini -->
+                    {{-- pendapatan bulanan --}}
                     <div class="stat-card stat-card-green">
                         <div class="stat-header">
                             <div class="stat-icon stat-icon-green">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
 
-                    <!-- Poin Eko -->
+                    {{-- poin bank sam --}}
                     <div class="stat-card stat-card-gold">
                         <div class="stat-header">
                             <div class="stat-icon stat-icon-gold">
@@ -86,9 +86,9 @@
                     </div>
                 </div>
 
-                <!-- Recent Transactions -->
+                {{-- transaksi --}}
                 <div class="transactions-grid">
-                    <!-- Setoran Terakhir -->
+                    {{-- setoran --}}
                     <div class="transaction-card">
                         <div class="transaction-header">
                             <h3 class="transaction-title">
@@ -150,7 +150,7 @@
                         </div>
                     </div>
 
-                    <!-- Penarikan Terakhir -->
+                    {{-- penarikan --}}
                     <div class="transaction-card">
                         <div class="transaction-header">
                             <h3 class="transaction-title">

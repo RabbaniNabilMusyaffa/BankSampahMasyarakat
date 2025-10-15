@@ -1,6 +1,4 @@
-/* ==================== ZTAIL.CSS - Bank Sampah Complete Styles ==================== */
-
-/* === Base & Reset === */
+// Base & Reset
 * {
     margin: 0;
     padding: 0;
@@ -14,13 +12,13 @@ body {
     overflow-x: hidden;
 }
 
-/* === App Container === */
+// App Container
 .app-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* === Sidebar === */
+//Sidebar
 .sidebar-container {
     position: fixed;
     top: 0;
@@ -71,7 +69,6 @@ body {
     transition: opacity 0.3s, width 0.3s;
 }
 
-/* Style Tombol Toggle yang Sudah Benar */
 .sidebar-toggle-btn {
     display: none;
     background: rgba(255, 255, 255, 0.1);
@@ -93,7 +90,6 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Aturan Baru untuk Menukar Ikon Toggle */
 .sidebar-toggle-btn .icon-collapse {
     display: block;
 }
@@ -107,8 +103,6 @@ body {
     display: block;
 }
 
-
-/* Close Button untuk Mobile */
 .close-btn {
     display: none;
     background: rgba(255, 255, 255, 0.1);
@@ -125,7 +119,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* === Navigation Menu === */
+// Navigation Menu
 .nav-menu {
     flex: 1;
     display: flex;
@@ -186,7 +180,7 @@ body {
     color: #ef4444;
 }
 
-/* === User Profile Card === */
+// User Profile Card
 .user-profile-card {
     display: flex;
     align-items: center;
@@ -233,7 +227,7 @@ body {
     text-overflow: ellipsis;
 }
 
-/* === SIDEBAR COLLAPSED STATE (SUDAH DIPERBAIKI) === */
+// SIDEBAR COLLAPSED STATE
 .sidebar-container.collapsed {
     width: 88px;
 }
@@ -248,7 +242,6 @@ body {
     width: 0;
 }
 
-/* Perbaikan untuk border ikon yang presisi */
 .sidebar-container.collapsed .nav-item {
     width: 47px;
     height: 51px;
@@ -269,7 +262,6 @@ body {
     padding: 0.75rem;
 }
 
-/* Tooltip untuk Collapsed State */
 .sidebar-container.collapsed .nav-item::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -294,7 +286,7 @@ body {
 }
 
 
-/* === Sidebar Overlay === */
+// Sidebar Overlay
 .sidebar-overlay {
     display: none;
     position: fixed;
@@ -310,7 +302,7 @@ body {
     opacity: 1;
 }
 
-/* === Mobile Navbar === */
+// Mobile Navbar
 .mobile-navbar {
     display: none;
     position: fixed;
@@ -355,7 +347,7 @@ body {
     width: 2.5rem;
 }
 
-/* === Main Content === */
+// Main Content
 .main-content {
     flex: 1;
     margin-left: 280px;
@@ -363,7 +355,7 @@ body {
 }
 
 .sidebar-container.collapsed ~ .main-content {
-    margin-left: 88px; /* Disesuaikan dengan lebar sidebar collapsed */
+    margin-left: 88px;
 }
 
 .content-wrapper {
@@ -372,7 +364,7 @@ body {
     padding: 2rem;
 }
 
-/* === Page Header === */
+// Page Header
 .page-header {
     display: flex;
     align-items: center;
@@ -405,7 +397,7 @@ body {
     color: #475569;
 }
 
-/* === Stats Grid === */
+//Stats Grid
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -520,7 +512,7 @@ body {
     margin-top: 0.5rem;
 }
 
-/* === Transactions Grid === */
+// Transactions Grid
 .transactions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -658,7 +650,7 @@ body {
     color: #059669;
 }
 
-/* === Search & Filter === */
+// Search & Filter
 .search-filter-container {
     display: flex;
     gap: 1rem;
@@ -713,7 +705,7 @@ body {
     box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
 }
 
-/* === Data Table === */
+// Data Table
 .data-table-container {
     background: white;
     border-radius: 1rem;
@@ -756,7 +748,7 @@ body {
     background: #f8fafc;
 }
 
-/* === Responsive Design === */
+// Responsive Design
 @media (max-width: 1024px) {
     .transactions-grid {
         grid-template-columns: 1fr;
@@ -768,12 +760,10 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* Show mobile navbar */
     .mobile-navbar {
         display: flex;
     }
 
-    /* Hide desktop toggle, show mobile close */
     .sidebar-toggle-btn {
         display: none;
     }
@@ -782,7 +772,6 @@ body {
         display: block;
     }
 
-    /* Sidebar mobile behavior */
     .sidebar-container {
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -792,7 +781,6 @@ body {
         transform: translateX(0);
     }
 
-    /* Main content adjustments */
     .main-content {
         margin-left: 0;
         padding-top: 64px;
@@ -834,13 +822,12 @@ body {
 }
 
 @media (min-width: 769px) {
-    /* Show desktop toggle button */
     .sidebar-toggle-btn {
         display: block;
     }
 }
 
-/* === Additional Utility Classes === */
+// Additional Utility Classes
 .hidden {
     display: none !important;
 }
@@ -864,7 +851,7 @@ body {
 .p-3 { padding: 1rem; }
 .p-4 { padding: 1.5rem; }
 
-/* === Button Styles === */
+// Button Styles
 .btn {
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -905,7 +892,7 @@ body {
     background: #dc2626;
 }
 
-/* === Badge Styles === */
+// Badge Styles
 .badge {
     display: inline-block;
     padding: 0.25rem 0.625rem;
@@ -934,7 +921,7 @@ body {
     color: #2563eb;
 }
 
-/* === Withdrawal Page Specific Styles === */
+//Withdrawal Page Specific Styles
 .withdrawal-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -1003,7 +990,7 @@ body {
     margin-top: 0.5rem;
 }
 
-/* === Settings Page Specific Styles === */
+// Settings Page Specific Styles
 .settings-card {
     background: white;
     border-radius: 1rem;

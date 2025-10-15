@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="withdrawal-grid">
-                    <!-- Form Penarikan -->
+                    {{-- form penarikan --}}
                     <div class="withdrawal-form-card">
                         <div class="balance-display">
                             <p class="balance-label">Saldo Tersedia</p>
@@ -57,7 +57,7 @@
                         </form>
                     </div>
 
-                    <!-- Riwayat Penarikan -->
+                    {{-- riwayat --}}
                     <div class="withdrawal-history-card">
                         <h3 class="section-title">Riwayat Penarikan</h3>
                         <div class="transaction-list">
