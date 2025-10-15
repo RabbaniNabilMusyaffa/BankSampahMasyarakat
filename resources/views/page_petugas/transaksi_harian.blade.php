@@ -68,7 +68,7 @@
             </tbody>
         </table>
 
-        <!-- Pagination (jika ada) -->
+        <!-- Pagination -->
         <!-- @if(isset($transaksis) && method_exists($transaksis, 'links')) -->
         <div style="margin-top: 24px;">
             <!-- {{ $transaksis->links() }} -->
@@ -76,7 +76,7 @@
         <!-- @endif -->
     </div>
 
-    <!-- Summary Cards (Optional) -->
+    <!-- Summary Cards -->
 
     <div class="stats-grid" style="margin-top: 24px;">
         <div class="stat-card green">
