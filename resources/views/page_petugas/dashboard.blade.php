@@ -5,6 +5,34 @@
 @section('page-title', 'Dashboard Bank Sampah')
 
 @section('content')
+{{-- @if (session('success'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('success') }}", // Ambil pesan dari session
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
+    @endif --}}
+
+     <div class="card-body p-0">
+                        @if (count($errors) > 0)
+                        <script>
+                            Swal.fire({
+  icon: "error",
+  title: "Hayoooo",
+  text: "Aksesmu ngga sah lohhh",
+  showConfirmButton: false,
+                timer: 1500
+                                
+});
+                        </script>
+                        </ul>
+                        </div>
+                      @endif
+    
     <!-- Alert Selamat Datang -->
     <div class="alert alert-success">
         <span>Selamat datang, <strong>{{ auth()->user()->name ?? 'Budi Santoso' }}</strong>! Anda login sebagai Petugas Bank Sampah.</span>
@@ -94,4 +122,6 @@
             </div>
         </div>
     </div>
+
+    
 @endsection

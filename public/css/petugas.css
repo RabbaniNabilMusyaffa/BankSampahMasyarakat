@@ -4,8 +4,12 @@
     box-sizing: border-box;
 }
 
+.body-overlay {
+    display: none !important;
+}
+
 body {
-    font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+    font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
     background: #f5f7fa;
     color: #2d3748;
     overflow-x: hidden;
@@ -142,7 +146,7 @@ body {
 }
 
 .menu-item.active::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 50%;
@@ -289,10 +293,15 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.stat-card.green { border-color: #48bb78; }
-.stat-card.blue { border-color: #4299e1; }
-.stat-card.orange { border-color: #ed8936; }
-
+.stat-card.green {
+    border-color: #48bb78;
+}
+.stat-card.blue {
+    border-color: #4299e1;
+}
+.stat-card.orange {
+    border-color: #ed8936;
+}
 
 .stat-header {
     display: flex;
@@ -306,9 +315,15 @@ body {
     opacity: 0.9;
 }
 
-.stat-card.green .stat-icon { color: #48bb78; }
-.stat-card.blue .stat-icon { color: #4299e1; }
-.stat-card.orange .stat-icon { color: #ed8936; }
+.stat-card.green .stat-icon {
+    color: #48bb78;
+}
+.stat-card.blue .stat-icon {
+    color: #4299e1;
+}
+.stat-card.orange .stat-icon {
+    color: #ed8936;
+}
 
 .stat-title {
     font-size: 13px;
@@ -717,7 +732,8 @@ tr:hover {
         font-size: 12px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 12px 8px;
     }
 

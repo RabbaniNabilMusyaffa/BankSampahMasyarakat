@@ -6,6 +6,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Bank Sampah - Petugas')</title>
     <link rel="stylesheet" href="{{ asset('css/petugas.css') }}">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="{{asset('css/toastr.css')}}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
     <!-- SIDEBAR -->
@@ -71,19 +78,23 @@
             <div style="margin: 20px 15px; height: 1px; background-color: rgba(255, 255, 255, 0.15);"></div>
 
             <!-- LOGOUT -->
-            <a href="#" class="menu-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <span class="menu-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                </span>
-                <span class="menu-text">Keluar</span>
-            </a>
-            <form id="logout-form" action="{{ route('logout')}}" method="GET" style="display: none;">
-                @csrf
-            </form>
+           <a href="#" class="menu-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    </a>
+
+<a href="#" class="menu-item" onclick="confirmLogout(event)">
+    <span class="menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+    </span>
+    <span class="menu-text">Keluar</span>
+</a>
+
+<form id="logout-form" action="{{ route('logout')}}" method="GET" style="display: none;">
+    @csrf
+</form>
         </div>
     </div>
 
@@ -105,7 +116,64 @@
         </div>
     </div>
 
+    <script src="{{asset('javascript/toastr.js')}}"></script>
     <script src="{{ asset('javascript/script.js') }}"></script>
+    <script>
+function confirmLogout(event) {
+    // Mencegah link berjalan secara default
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'Yakin ingin keluar?',
+        text: "Anda akan keluar dari sesi ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, keluar!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        // Jika pengguna menekan tombol "Ya, keluar!"
+        if (result.isConfirmed) {
+            // Maka submit form logout
+            document.getElementById('logout-form').submit();
+        }
+    });
+}
+</script>
+<script>
+    // --- KONFIGURASI TOASTR GLOBAL ---
+    // Anda cukup meletakkan ini sekali saja di layout utama
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    // --- SCRIPT UNTUK MENAMPILKAN NOTIFIKASI ---
+    // Cek jika ada session flash 'success'
+    @if (session('success'))
+        // Tampilkan notifikasi Toastr
+        toastr.success("{{ session('success') }}", "Berhasil!");
+    @endif
+
+    // Anda juga bisa menambahkan untuk pesan error, info, dll.
+    @if (session('error'))
+        toastr.error("{{ session('error') }}", "Gagal!");
+    @endif
+</script>
     @stack('scripts')
 </body>
 </html>

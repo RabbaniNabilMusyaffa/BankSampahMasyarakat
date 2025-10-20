@@ -48,7 +48,7 @@
 
             <div class="nav-divider"></div>
 
-            <a href="#" class="nav-item nav-logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-tooltip="Keluar">
+            <a href="#" class="nav-item nav-logout" onclick="confirmLogout(event)" data-tooltip="Keluar">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
@@ -89,3 +89,27 @@
     </div>
     <div class="w-10"></div>
 </div>
+
+<script>
+function confirmLogout(event) {
+    // Mencegah link berjalan secara default
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'Yakin ingin keluar?',
+        text: "Anda akan keluar dari sesi ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, keluar!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        // Jika pengguna menekan tombol "Ya, keluar!"
+        if (result.isConfirmed) {
+            // Maka submit form logout
+            document.getElementById('logout-form').submit();
+        }
+    });
+}
+</script>

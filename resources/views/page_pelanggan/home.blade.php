@@ -6,8 +6,37 @@
     <title>Dashboard - Bank Sampah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{asset('css/pelanggan.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('success') }}", // Ambil pesan dari session
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
+    @endif
+
+    <div class="card-body p-0">
+                        @if (count($errors) > 0)
+                        <script>
+                            Swal.fire({
+  icon: "error",
+  title: "Hayoooo",
+  text: "Aksesmu ngga sah lohhh",
+  showConfirmButton: false,
+                timer: 1500
+                                
+});
+                        </script>
+                        </ul>
+                        </div>
+                      @endif
     <div class="app-container">
         {{-- sidebar --}}
         @include('navbar.navigation')

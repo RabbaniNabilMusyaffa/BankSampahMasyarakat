@@ -5,6 +5,23 @@
 @section('page-title', 'Input Setoran Sampah')
 
 @section('content')
+
+
+     <div class="card-body p-0">
+                        @if (count($errors) > 0)
+                        <script>
+                            Swal.fire({
+  icon: "error",
+  title: "Hayoooo",
+  text: "Aksesmu ngga sah lohhh",
+  showConfirmButton: false,
+                timer: 1500
+                                
+});
+                        </script>
+                        </ul>
+                        </div>
+                      @endif
     <!-- Button Tambah Setoran -->
     <div class="content-box">
         <h2>📝 Input Setoran Sampah</h2>
