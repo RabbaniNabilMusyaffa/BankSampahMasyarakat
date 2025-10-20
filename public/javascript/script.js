@@ -35,7 +35,7 @@ function hitungTotal() {
     const berat = document.getElementById('berat').value;
     
     if (kategoriSelect && berat) {
-        // Untuk Laravel: ambil harga dari data-harga attribute
+        // ambil harga dari data-harga attribute
         const selectedOption = kategoriSelect.options[kategoriSelect.selectedIndex];
         const hargaPerKg = selectedOption.getAttribute('data-harga');
         
@@ -165,7 +165,7 @@ function rejectPenarikan(button, nama) {
 function logout() {
     if (confirm('Apakah Anda yakin ingin logout?')) {
         alert('👋 Terima kasih! Anda telah logout dari sistem.\n\nSampai jumpa kembali!');
-        // Di Laravel akan menggunakan form POST
+        // menggunakan form POST
         // window.location.href = '/logout';
     }
 }

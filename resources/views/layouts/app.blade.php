@@ -67,7 +67,7 @@
                 <span class="menu-text">Transaksi Hari Ini</span>
             </a>
 
-            <!-- PEMBATAS / SEPARATOR -->
+            <!-- PEMBATAS -->
             <div style="margin: 20px 15px; height: 1px; background-color: rgba(255, 255, 255, 0.15);"></div>
 
             <!-- LOGOUT -->

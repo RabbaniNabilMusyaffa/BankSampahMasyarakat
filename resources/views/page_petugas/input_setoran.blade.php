@@ -13,7 +13,7 @@
         </button>
     </div>
 
-    <!-- Alert Success (jika ada) -->
+    <!-- Alert Success -->
     @if(session('success'))
     <div class="alert alert-success">
         <span style="font-size: 24px;">✅</span>
