@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="{{ asset('css/petugas.css') }}">
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="{{asset('css/toastr.css')}}" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
@@ -78,8 +77,7 @@
             <div style="margin: 20px 15px; height: 1px; background-color: rgba(255, 255, 255, 0.15);"></div>
 
             <!-- LOGOUT -->
-           <a href="#" class="menu-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-    </a>
+        
 
 <a href="#" class="menu-item" onclick="confirmLogout(event)">
     <span class="menu-icon">
@@ -116,7 +114,7 @@
         </div>
     </div>
 
-    <script src="{{asset('javascript/toastr.js')}}"></script>
+    
     <script src="{{ asset('javascript/script.js') }}"></script>
     <script>
 function confirmLogout(event) {
@@ -141,39 +139,12 @@ function confirmLogout(event) {
     });
 }
 </script>
-<script>
-    // --- KONFIGURASI TOASTR GLOBAL ---
-    // Anda cukup meletakkan ini sekali saja di layout utama
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
 
-    // --- SCRIPT UNTUK MENAMPILKAN NOTIFIKASI ---
-    // Cek jika ada session flash 'success'
-    @if (session('success'))
-        // Tampilkan notifikasi Toastr
-        toastr.success("{{ session('success') }}", "Berhasil!");
-    @endif
 
-    // Anda juga bisa menambahkan untuk pesan error, info, dll.
-    @if (session('error'))
-        toastr.error("{{ session('error') }}", "Gagal!");
-    @endif
-</script>
+   
+   
+
+
     @stack('scripts')
 </body>
 </html>

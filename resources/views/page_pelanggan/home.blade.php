@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    @if (session('success'))
+    {{-- @if (session('success'))
         <script>
             Swal.fire({
                 position: "top-end",
@@ -20,19 +20,21 @@
                 timer: 2000
             });
         </script>
-    @endif
+    @endif --}}
 
     <div class="card-body p-0">
-                        @if (count($errors) > 0)
-                        <script>
-                            Swal.fire({
-  icon: "error",
-  title: "Hayoooo",
-  text: "Aksesmu ngga sah lohhh",
-  showConfirmButton: false,
-                timer: 1500
-                                
-});
+        @if (count($errors) > 0)
+        <script>
+            Swal.fire({
+            icon: "error",
+            title: "Peringatan",
+            text: "{{$errors->first()}}",
+            showConfirmButton: false,
+            timer: 1500
+            });
+        </script>
+    </div>
+        @endif
                         </script>
                         </ul>
                         </div>

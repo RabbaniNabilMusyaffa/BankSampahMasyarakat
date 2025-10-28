@@ -16,22 +16,19 @@
             });
         </script>
     @endif --}}
-
      <div class="card-body p-0">
-                        @if (count($errors) > 0)
-                        <script>
-                            Swal.fire({
-  icon: "error",
-  title: "Hayoooo",
-  text: "Aksesmu ngga sah lohhh",
-  showConfirmButton: false,
-                timer: 1500
-                                
-});
-                        </script>
-                        </ul>
-                        </div>
-                      @endif
+        @if (count($errors) > 0)
+        <script>
+            Swal.fire({
+            icon: "error",
+            title: "Peringatan",
+            text: "{{$errors->first()}}",
+            showConfirmButton: false,
+            timer: 1500
+            });
+        </script>
+    </div>
+        @endif
     
     <!-- Alert Selamat Datang -->
     <div class="alert alert-success">
@@ -125,3 +122,15 @@
 
     
 @endsection
+
+{{-- @push('scripts')
+<script>
+    // Periksa jika ada session 'success' dari controller
+    @if (session('success'))
+        // Jika ada, panggil fungsi toastr.succes
+        
+        toastr.success("{{ session('success') }}");
+    @endif
+
+</script>
+@endpush --}}
