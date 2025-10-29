@@ -33,10 +33,7 @@
             timer: 1500
             });
         </script>
-    </div>
-        @endif
-                        </script>
-                        </ul>
+
                         </div>
                       @endif
     <div class="app-container">
@@ -95,7 +92,7 @@
                         </div>
                         <div class="stat-content">
                             <p class="stat-label">Pendapatan Bulan Ini</p>
-                            <h3 class="stat-value">Rp 855.000<span class="stat-unit">,-</span></h3>
+                            <h3 class="stat-value">Rp 855000<span class="stat-unit">,-</span></h3>
                             <p class="stat-info">Dari 12 transaksi</p>
                         </div>
                     </div>
@@ -120,7 +117,7 @@
                 {{-- transaksi --}}
                 <div class="transactions-grid">
                     {{-- setoran --}}
-                    <div class="transaction-card">
+                    <div class="transaction-card card-base">
                         <div class="transaction-header">
                             <h3 class="transaction-title">
                                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +139,7 @@
                                     <p class="transaction-date">10 Oktober 2025 · 15.0 kg</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-positive">
-                                    <p>+ Rp 45.000</p>
+                                    <p>+ Rp 45000</p>
                                     <span class="transaction-status transaction-status-success">Selesai</span>
                                 </div>
                             </div>
@@ -158,7 +155,7 @@
                                     <p class="transaction-date">8 Oktober 2025 · 22.5 kg</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-positive">
-                                    <p>+ Rp 67.500</p>
+                                    <p>+ Rp 67500</p>
                                     <span class="transaction-status transaction-status-success">Selesai</span>
                                 </div>
                             </div>
@@ -174,7 +171,7 @@
                                     <p class="transaction-date">5 Oktober 2025 · 8.5 kg</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-positive">
-                                    <p>+ Rp 42.500</p>
+                                    <p>+ Rp 42500</p>
                                     <span class="transaction-status transaction-status-success">Selesai</span>
                                 </div>
                             </div>
@@ -182,7 +179,7 @@
                     </div>
 
                     {{-- penarikan --}}
-                    <div class="transaction-card">
+                    <div class="transaction-card card-base">
                         <div class="transaction-header">
                             <h3 class="transaction-title">
                                 <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,27 +197,11 @@
                                     </svg>
                                 </div>
                                 <div class="transaction-details">
-                                    <p class="transaction-name">Transfer Bank BCA</p>
+                                    <p class="transaction-name">Penarikan</p>
                                     <p class="transaction-date">9 Oktober 2025</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-negative">
-                                    <p>- Rp 200.000</p>
-                                    <span class="transaction-status transaction-status-success">Berhasil</span>
-                                </div>
-                            </div>
-
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-blue">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">E-Wallet GoPay</p>
-                                    <p class="transaction-date">25 September 2025</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-negative">
-                                    <p>- Rp 150.000</p>
+                                    <p>- Rp 200000</p>
                                     <span class="transaction-status transaction-status-success">Berhasil</span>
                                 </div>
                             </div>
@@ -232,11 +213,27 @@
                                     </svg>
                                 </div>
                                 <div class="transaction-details">
-                                    <p class="transaction-name">Transfer Bank Mandiri</p>
+                                    <p class="transaction-name">Penarikan</p>
+                                    <p class="transaction-date">25 September 2025</p>
+                                </div>
+                                <div class="transaction-amount transaction-amount-negative">
+                                    <p>- Rp 150000</p>
+                                    <span class="transaction-status transaction-status-success">Berhasil</span>
+                                </div>
+                            </div>
+
+                            <div class="transaction-item">
+                                <div class="transaction-icon transaction-icon-blue">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                    </svg>
+                                </div>
+                                <div class="transaction-details">
+                                    <p class="transaction-name">Penarikan</p>
                                     <p class="transaction-date">10 September 2025</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-negative">
-                                    <p>- Rp 300.000</p>
+                                    <p>- Rp 300000</p>
                                     <span class="transaction-status transaction-status-success">Berhasil</span>
                                 </div>
                             </div>

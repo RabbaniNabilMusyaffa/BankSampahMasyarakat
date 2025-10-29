@@ -18,7 +18,7 @@
   text: "Aksesmu ngga sah lohhh",
   showConfirmButton: false,
                 timer: 1500
-                                
+
 });
                         </script>
                         </ul>
@@ -72,10 +72,10 @@
                                     </div>
                                 </td>
                                 <td>15.0</td>
-                                <td class="table-amount">Rp 45.000</td>
-                                <td><span class="badge badge-success">Selesai</span></td>
+                                <td class="table-amount">Rp 45000</td>
+                                <td><span class="transaction-status transaction-status-success">Selesai</span></td>
                                 <td>
-                                    <button class="btn-detail">Detail</button>
+                                    <button class="btn btn-detail">Detail</button>
                                 </td>
                             </tr>
                             <tr>
@@ -87,10 +87,10 @@
                                     </div>
                                 </td>
                                 <td>22.5</td>
-                                <td class="table-amount">Rp 67.500</td>
-                                <td><span class="badge badge-success">Selesai</span></td>
+                                <td class="table-amount">Rp 67500</td>
+                                <td><span class="transaction-status transaction-status-success">Selesai</span></td>
                                 <td>
-                                    <button class="btn-detail">Detail</button>
+                                    <button class="btn btn-detail">Detail</button>
                                 </td>
                             </tr>
                             <tr>
@@ -102,10 +102,10 @@
                                     </div>
                                 </td>
                                 <td>8.5</td>
-                                <td class="table-amount">Rp 42.500</td>
-                                <td><span class="badge badge-success">Selesai</span></td>
+                                <td class="table-amount">Rp 42500</td>
+                                <td><span class="transaction-status transaction-status-success">Selesai</span></td>
                                 <td>
-                                    <button class="btn-detail">Detail</button>
+                                    <button class="btn btn-detail">Detail</button>
                                 </td>
                             </tr>
                         </tbody>

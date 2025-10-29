@@ -19,7 +19,7 @@
   text: "Aksesmu ngga sah lohhh",
   showConfirmButton: false,
                 timer: 1500
-                                
+
 });
                         </script>
                         </ul>
@@ -37,13 +37,13 @@
 
                 <div class="withdrawal-grid">
                     {{-- form penarikan --}}
-                    <div class="withdrawal-form-card">
+                    <div class="withdrawal-form-card card-base">
                         <div class="balance-display">
                             <p class="balance-label">Saldo Tersedia</p>
-                            <h2 class="balance-amount">Rp 855.000,-</h2>
+                            <h2 class="balance-amount">Rp 855000,</h2>
                         </div>
 
-                        <form class="withdrawal-form">
+                        <form class="withdrawal-form card-base">
                             <div class="form-group">
                                 <label class="form-label">Jumlah Penarikan</label>
                                 <input type="number" placeholder="Masukkan jumlah" class="form-input">
@@ -53,19 +53,14 @@
                             <div class="form-group">
                                 <label class="form-label">Metode Penarikan</label>
                                 <select class="form-input">
-                                    <option>Transfer Bank</option>
-                                    <option>E-Wallet (OVO)</option>
-                                    <option>E-Wallet (GoPay)</option>
-                                    <option>E-Wallet (Dana)</option>
+                                    <option>Tunai</option>
+
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label">Nomor Rekening / E-Wallet</label>
-                                <input type="text" placeholder="Masukkan nomor" class="form-input">
-                            </div>
 
-                            <button type="submit" class="btn-primary">
+
+                            <button type="submit" class="btn btn-primary">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
@@ -75,7 +70,7 @@
                     </div>
 
                     {{-- riwayat --}}
-                    <div class="withdrawal-history-card">
+                    <div class="withdrawal-history-card card-base">
                         <h3 class="section-title">Riwayat Penarikan</h3>
                         <div class="transaction-list">
                             <div class="transaction-item">
@@ -85,27 +80,11 @@
                                     </svg>
                                 </div>
                                 <div class="transaction-details">
-                                    <p class="transaction-name">Transfer Bank BCA</p>
+                                    <p class="transaction-name">Penarikan Tunai</p>
                                     <p class="transaction-date">9 Oktober 2025</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-negative">
-                                    <p>Rp 200.000</p>
-                                    <span class="transaction-status transaction-status-success">Berhasil</span>
-                                </div>
-                            </div>
-
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-blue">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">E-Wallet GoPay</p>
-                                    <p class="transaction-date">25 September 2025</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-negative">
-                                    <p>Rp 150.000</p>
+                                    <p>Rp 200000</p>
                                     <span class="transaction-status transaction-status-success">Berhasil</span>
                                 </div>
                             </div>
@@ -117,11 +96,27 @@
                                     </svg>
                                 </div>
                                 <div class="transaction-details">
-                                    <p class="transaction-name">Transfer Bank Mandiri</p>
+                                    <p class="transaction-name">Penarikan Tunai</p>
+                                    <p class="transaction-date">25 September 2025</p>
+                                </div>
+                                <div class="transaction-amount transaction-amount-negative">
+                                    <p>Rp 150000</p>
+                                    <span class="transaction-status transaction-status-success">Berhasil</span>
+                                </div>
+                            </div>
+
+                            <div class="transaction-item">
+                                <div class="transaction-icon transaction-icon-blue">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                    </svg>
+                                </div>
+                                <div class="transaction-details">
+                                    <p class="transaction-name">Penarikan Tunai</p>
                                     <p class="transaction-date">10 September 2025</p>
                                 </div>
                                 <div class="transaction-amount transaction-amount-negative">
-                                    <p>Rp 300.000</p>
+                                    <p>Rp 300000</p>
                                     <span class="transaction-status transaction-status-success">Berhasil</span>
                                 </div>
                             </div>

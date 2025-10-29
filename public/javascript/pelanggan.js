@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Open sidebar mobile
     if (openBtn) {
         openBtn.addEventListener('click', function() {
-            sidebar.classList.add('mobile-open'); // Menggunakan class khusus mobile
+            sidebar.classList.add('mobile-open');
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Real-time Date Display
     updateDateTime();
-    setInterval(updateDateTime, 60000); // Update every minute
+    setInterval(updateDateTime, 60000);
 
     function updateDateTime() {
         const dateElement = document.querySelector('.header-date span');
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Helper Functions
+// Helper
 
 // Show Detail Modal
 function showDetailModal(data) {
@@ -475,7 +475,7 @@ function exportToCSV() {
         const rowData = [];
 
         cols.forEach((col, index) => {
-            // Skip action column
+            
             if (index < cols.length - 1) {
                 rowData.push(col.textContent.trim());
             }
@@ -758,7 +758,7 @@ window.addEventListener('load', () => {
     initTooltips();
 });
 
-// === Handle Network Status ===
+// Handle Network Status
 window.addEventListener('online', () => {
     showNotification('Koneksi internet tersambung kembali', 'success');
 });
@@ -791,4 +791,4 @@ document.addEventListener('submit', function(e) {
 
 console.log('🌿 Bank Sampah EcoBank - System Ready!');
 console.log('Version: 1.0.0');
-console.log('Developed with ❤️ for a greener future');
+console.log('Developed with for a greener future');

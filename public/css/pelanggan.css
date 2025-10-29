@@ -1,5 +1,3 @@
-/* ==================== ZTAIL.CSS - Bank Sampah Complete Styles ==================== */
-
 /* === Base & Reset === */
 * {
     margin: 0;
@@ -294,7 +292,7 @@ body {
 }
 
 
-/* === Sidebar Overlay === */
+/* Sidebar Overlay */
 .sidebar-overlay {
     display: none;
     position: fixed;
@@ -310,7 +308,7 @@ body {
     opacity: 1;
 }
 
-/* === Mobile Navbar === */
+/* Mobile Navbar */
 .mobile-navbar {
     display: none;
     position: fixed;
@@ -355,7 +353,7 @@ body {
     width: 2.5rem;
 }
 
-/* === Main Content === */
+/* Main Content */
 .main-content {
     flex: 1;
     margin-left: 280px;
@@ -363,7 +361,7 @@ body {
 }
 
 .sidebar-container.collapsed ~ .main-content {
-    margin-left: 88px; /* Disesuaikan dengan lebar sidebar collapsed */
+    margin-left: 88px;
 }
 
 .content-wrapper {
@@ -372,7 +370,7 @@ body {
     padding: 2rem;
 }
 
-/* === Page Header === */
+/* Page Header */
 .page-header {
     display: flex;
     align-items: center;
@@ -405,7 +403,16 @@ body {
     color: #475569;
 }
 
-/* === Stats Grid === */
+/* === KELAS DASAR (HASIL REFAKTOR) === */
+.card-base {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+}
+
+/* Stats Grid */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -520,7 +527,7 @@ body {
     margin-top: 0.5rem;
 }
 
-/* === Transactions Grid === */
+/* Transactions Grid */
 .transactions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -528,11 +535,7 @@ body {
 }
 
 .transaction-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f1f5f9;
+
 }
 
 .transaction-header {
@@ -658,7 +661,7 @@ body {
     color: #059669;
 }
 
-/* === Search & Filter === */
+/* Search & Filter */
 .search-filter-container {
     display: flex;
     gap: 1rem;
@@ -690,12 +693,6 @@ body {
     background: white;
 }
 
-.search-input:focus {
-    outline: none;
-    border-color: #059669;
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-}
-
 .filter-select {
     padding: 0.875rem 1rem;
     border: 1px solid #e2e8f0;
@@ -707,13 +704,31 @@ body {
     min-width: 180px;
 }
 
-.filter-select:focus {
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.938rem;
+    transition: all 0.2s;
+}
+
+/* Style focus gabungan  */
+.search-input:focus,
+.filter-select:focus,
+.form-input:focus {
     outline: none;
     border-color: #059669;
     box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
 }
 
-/* === Data Table === */
+.form-helper {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+}
+
+/* Data Table */
 .data-table-container {
     background: white;
     border-radius: 1rem;
@@ -756,7 +771,7 @@ body {
     background: #f8fafc;
 }
 
-/* === Responsive Design === */
+/* Responsive Design */
 @media (max-width: 1024px) {
     .transactions-grid {
         grid-template-columns: 1fr;
@@ -768,12 +783,11 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* Show mobile navbar */
+
     .mobile-navbar {
         display: flex;
     }
 
-    /* Hide desktop toggle, show mobile close */
     .sidebar-toggle-btn {
         display: none;
     }
@@ -834,13 +848,13 @@ body {
 }
 
 @media (min-width: 769px) {
-    /* Show desktop toggle button */
+
     .sidebar-toggle-btn {
         display: block;
     }
 }
 
-/* === Additional Utility Classes === */
+/* utilitty class tambahan */
 .hidden {
     display: none !important;
 }
@@ -864,7 +878,7 @@ body {
 .p-3 { padding: 1rem; }
 .p-4 { padding: 1.5rem; }
 
-/* === Button Styles === */
+/* Button Styles */
 .btn {
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -905,7 +919,7 @@ body {
     background: #dc2626;
 }
 
-/* === Badge Styles === */
+/* Badge Styles */
 .badge {
     display: inline-block;
     padding: 0.25rem 0.625rem;
@@ -915,7 +929,7 @@ body {
 }
 
 .badge-success {
-    background: #d1fae5;
+    background: #47F602;
     color: #059669;
 }
 
@@ -934,7 +948,7 @@ body {
     color: #2563eb;
 }
 
-/* === Withdrawal Page Specific Styles === */
+/* Withdrawal Page Specific Styles */
 .withdrawal-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -944,11 +958,7 @@ body {
 
 .withdrawal-form-card,
 .withdrawal-history-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f1f5f9;
+
 }
 
 .balance-display {
@@ -982,34 +992,9 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.form-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
-    font-size: 0.938rem;
-    transition: all 0.2s;
-}
 
-.form-input:focus {
-    outline: none;
-    border-color: #059669;
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-}
-
-.form-helper {
-    font-size: 0.75rem;
-    color: #64748b;
-    margin-top: 0.5rem;
-}
-
-/* === Settings Page Specific Styles === */
 .settings-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f1f5f9;
+
     margin-bottom: 1.5rem;
 }
 
@@ -1144,3 +1129,25 @@ body {
 .toggle-input:checked::after {
     transform: translateX(1.5rem);
 }
+
+
+.w-5 {
+    width: 1.25rem;
+}
+
+.h-5 {
+    height: 1.25rem;
+}
+
+.text-gray-400 {
+    color: #94a3b8;
+}
+
+.text-red-400 {
+    color: #f87171;
+}
+
+.text-red-600 {
+    color: #dc2626;
+}
+

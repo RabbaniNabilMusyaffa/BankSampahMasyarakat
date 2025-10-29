@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengaturan Akun - Bank Sampah</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/pelanggan.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -18,7 +18,7 @@
   text: "Aksesmu ngga sah lohhh",
   showConfirmButton: false,
                 timer: 1500
-                                
+
 });
                         </script>
                         </ul>
@@ -35,7 +35,7 @@
                 </div>
 
                 {{-- profile --}}
-                <div class="settings-card">
+                <div class="settings-card card-base">
                     <h3 class="section-title">Informasi Profile</h3>
                     <div class="profile-section">
                         <div class="profile-avatar-large">
@@ -43,18 +43,18 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                         </div>
-                        <button class="btn-secondary">Ubah Foto</button>
+                        <button class="btn btn-secondary">Ubah Foto</button>
                     </div>
 
                     <form class="settings-form">
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Nama Lengkap</label>
-                                <input type="text" value="Budi Santoso" class="form-input">
+                                <input type="text" value="Bambang" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" value="budi@email.com" class="form-input">
+                                <input type="email" value="BambangGentolet@email.com" class="form-input">
                             </div>
                         </div>
 
@@ -71,10 +71,10 @@
 
                         <div class="form-group">
                             <label class="form-label">Alamat Lengkap</label>
-                            <textarea rows="3" class="form-input">Jl. Merdeka No. 123, Surabaya</textarea>
+                            <textarea rows="3" class="form-input">Jl. Jambangan No.456, Surabaya</textarea>
                         </div>
 
-                        <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </form>
                 </div>
 
@@ -115,7 +115,7 @@
                 </div>
 
                 {{-- notif --}}
-                <div class="settings-card">
+                <div class="settings-card card-base">
                     <h3 class="section-title">Notifikasi</h3>
                     <div class="settings-list">
                         <label class="settings-toggle">
@@ -160,8 +160,8 @@
                 </div>
 
                 {{-- peringatan --}}
-                <div class="settings-card settings-card-danger">
-                    <h3 class="section-title text-red-600">Zona Berbahaya</h3>
+                <div class="settings-card settings-card-danger card-base">
+                    <h3 class="section-title text-red-600">PERINGATAN</h3>
                     <div class="settings-list">
                         <button class="settings-item">
                             <div class="settings-item-content">
