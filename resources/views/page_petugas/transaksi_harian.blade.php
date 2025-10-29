@@ -21,7 +21,7 @@
                         </div>
                       @endif
     <div class="content-box">
-        <h2>📋 Semua Transaksi Hari Ini</h2>
+        <h2>Semua Transaksi Hari Ini</h2>
         
         <!-- Filter/Summary Info -->
         <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
@@ -74,7 +74,7 @@
                 <tr>
                     <td colspan="6" style="text-align: center; padding: 40px;">
                         <div style="color: #a0aec0;">
-                            <span style="font-size: 48px;">📭</span>
+                            <span style="font-size: 48px;"></span>
                             <p style="margin-top: 12px; font-size: 16px;">Belum ada transaksi hari ini</p>
                         </div>
                     </td>

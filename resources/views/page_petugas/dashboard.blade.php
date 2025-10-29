@@ -91,34 +91,34 @@
         </div>
     </div>
 
-    <!-- Aktivitas Hari Ini -->
-    <div class="content-box">
-        <h2>📊 Aktivitas Hari Ini</h2>
-        
-        <div class="activity-card success">
-            <div class="activity-icon">✓</div>
-            <div class="activity-content">
-                <h3>Transaksi Setoran</h3>
-                <p>Anda telah memproses <strong>{{ $jumlahSetoran ?? 0 }} transaksi setoran</strong> dengan total sampah <strong>{{ $beratSetoran ?? 0 }} kg</strong>.</p>
+        <!-- Aktivitas Hari Ini -->
+        <div class="content-box">
+            <h2>📊 Aktivitas Hari Ini</h2>
+            
+            <div class="activity-card success">
+                <div class="activity-icon">📄</div>
+                <div class="activity-content">
+                    <h3>Setoran Terakhir</h3>
+                    <p>Pukul <strong>{{ $setoranTerakhir->waktu ?? '-' }}</strong> - <strong>{{ $setoranTerakhir->nama_nasabah ?? '-' }}</strong> menyetor {{ $setoranTerakhir->kategori ?? '-' }} seberat <strong>{{ $setoranTerakhir->berat ?? 0 }} kg</strong></p>
+                </div>
             </div>
-        </div>
 
-        <div class="activity-card warning">
-            <div class="activity-icon">⏰</div>
-            <div class="activity-content">
-                <h3>Request Penarikan</h3>
-                <p>Terdapat <strong>{{ $requestPenarikan ?? 0 }} request penarikan saldo</strong> yang menunggu validasi Anda.</p>
+            <div class="activity-card warning">
+                <div class="activity-icon">💵</div>
+                <div class="activity-content">
+                    <h3>Penarikan Terakhir</h3>
+                    <p>Pukul <strong>{{ $penarikanTerakhir->waktu ?? '-' }}</strong> - Request penarikan dari <strong>{{ $penarikanTerakhir->nama_nasabah ?? '-' }}</strong> sebesar <strong>Rp {{ number_format($penarikanTerakhir->jumlah ?? 0, 0, ',', '.') }}</strong> - <strong>{{ $penarikanTerakhir->status ?? 'Menunggu Validasi' }}</strong></p>
+                </div>
             </div>
-        </div>
 
-        <div class="activity-card info">
-            <div class="activity-icon">📈</div>
-            <div class="activity-content">
-                <h3>Performa Hari Ini</h3>
-                <p>Aktivitas meningkat <strong>{{ $persentaseNaik ?? 0 }}%</strong> dibandingkan hari kemarin dengan total pendapatan <strong>Rp {{ number_format($totalPendapatan ?? 0, 0, ',', '.') }}</strong>.</p>
+            <div class="activity-card info">
+                <div class="activity-icon">✅</div>
+                <div class="activity-content">
+                    <h3>Status Validasi</h3>
+                    <p>Hari ini Anda sudah memvalidasi <strong>{{ $totalValidasi ?? 0 }} transaksi</strong> dengan total <strong>{{ $totalDisetujui ?? 0 }} disetujui</strong> dan <strong>{{ $totalDitolak ?? 0 }} ditolak</strong>.</p>
+                </div>
             </div>
         </div>
-    </div>
 
     
 @endsection

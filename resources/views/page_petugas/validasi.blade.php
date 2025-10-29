@@ -6,22 +6,6 @@
 
 @section('content')
     <!-- Alert Success -->
-<div class="card-body p-0">
-                        @if (count($errors) > 0)
-                        <script>
-                            Swal.fire({
-  icon: "error",
-  title: "Hayoooo",
-  text: "Aksesmu ngga sah lohhh",
-  showConfirmButton: false,
-                timer: 1500
-                                
-});
-                        </script>
-                        </ul>
-                        </div>
-                      @endif
-    <!-- Alert Success (jika ada) -->
     @if(session('success'))
     <div class="alert alert-success">
         <span style="font-size: 24px;">✅</span>
@@ -31,7 +15,7 @@
 
     <!-- Request Penarikan Pending -->
     <div class="content-box">
-        <h2>💰 Validasi Penarikan Saldo</h2>
+        <h2>Validasi Penarikan Saldo</h2>
         <table>
             <thead>
                 <tr>
@@ -64,7 +48,7 @@
                 <tr>
                     <td colspan="6" style="text-align: center; padding: 40px;">
                         <div style="color: #a0aec0;">
-                            <span style="font-size: 48px;">✅</span>
+                            <span style="font-size: 48px;"></span>
                             <p style="margin-top: 12px; font-size: 16px;">Tidak ada request penarikan yang menunggu validasi</p>
                         </div>
                     </td>
@@ -76,7 +60,7 @@
 
     <!-- Riwayat Validasi -->
     <div class="content-box">
-        <h2>✅ Riwayat Validasi</h2>
+        <h2>Riwayat Validasi</h2>
         <table>
             <thead>
                 <tr>

@@ -24,7 +24,7 @@
                       @endif
     <!-- Button Tambah Setoran -->
     <div class="content-box">
-        <h2>📝 Input Setoran Sampah</h2>
+        <h2>Input Setoran Sampah</h2>
         <button class="btn btn-primary" onclick="showModal('setoranModal')">
             <span>➕</span> Tambah Setoran Baru
         </button>
@@ -40,7 +40,7 @@
 
     <!-- Daftar Setoran Hari Ini -->
     <div class="content-box">
-        <h2>📋 Daftar Setoran Hari Ini</h2>
+        <h2>Daftar Setoran Hari Ini</h2>
         <table>
             <thead>
                 <tr>
@@ -75,7 +75,7 @@
     <div id="setoranModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📝 Input Setoran Sampah</h3>
+                <h3>Input Setoran Sampah</h3>
                 <button class="close-modal" onclick="closeModal('setoranModal')">×</button>
             </div>
             <form action="" method="POST" onsubmit="return validateForm(event)">
