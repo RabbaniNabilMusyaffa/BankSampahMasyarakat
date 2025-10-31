@@ -124,15 +124,24 @@
     <div class="card">
         {{-- validasi error --}}
         <div class="card-body p-0">
-                        @if (count($errors) > 0)
-                        <div class="alert alert-danger mt-2">
-                          <ul>
-                          @foreach ($errors->all() as $error)
-                              <li>{{$error}}</li>
-                          @endforeach
-                        </ul>
-                        </div>
-                      @endif
+
+    @if ($errors->any())
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-4" role="alert">
+
+            @foreach ($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+
+    </div>
+    @endif
+
+</div>
+               <div id="registerForm">
+            @if (session()->has('success'))
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 my-4" role="alert">
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
         <!-- Tab Navigation -->
         <div class="tab-container">
             <button class="tab-button active" id="loginTab">Login</button>
@@ -176,9 +185,6 @@
 
                 <button type="submit" class="btn-primary">Login</button>
 
-                <p style="text-align: center; margin-top: 25px; color: #64748b; font-size: 15px;">
-                    Belum punya akun? <a href="{{ route('register') }}" class="link-text">Daftar sekarang</a>
-                </p>
             </form>
         </div>
     </div>

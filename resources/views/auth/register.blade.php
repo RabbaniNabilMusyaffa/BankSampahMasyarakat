@@ -161,7 +161,7 @@
                         required
                     >
                 </div>
-                
+
                 <div class="form-group">
                     <label for="role">Berikan Role</label>
                     <input
@@ -201,9 +201,7 @@
 
                 <button type="submit" class="btn-primary">Daftar</button>
 
-                <p style="text-align: center; margin-top: 25px; color: #64748b; font-size: 15px;">
-                    Sudah punya akun? <a href="{{ route('login') }}" class="link-text">Login sekarang</a>
-                </p>
+
             </form>
         </div>
     </div>

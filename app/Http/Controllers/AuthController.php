@@ -44,7 +44,7 @@ class AuthController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        return redirect()->back()->with('success', 'Registrasi berhasil. Silakan login.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
 
     public function login(Request $request)
