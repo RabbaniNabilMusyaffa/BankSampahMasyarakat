@@ -2,7 +2,24 @@
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('collapsed');
+    
+    // Simpan state ke localStorage
+    if (sidebar.classList.contains('collapsed')) {
+        localStorage.setItem('sidebarCollapsed', 'true');
+    } else {
+        localStorage.setItem('sidebarCollapsed', 'false');
+    }
 }
+
+// Load sidebar state dari localStorage
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarCollapsed = localStorage.getItem('sidebarCollapsed');
+    
+    if (sidebarCollapsed === 'true') {
+        sidebar.classList.add('collapsed');
+    }
+});
 
 // ========== MODAL ==========
 function showModal(modalId) {
@@ -162,12 +179,21 @@ function rejectPenarikan(button, nama) {
 }
 
 // ========== LOGOUT ==========
-function logout() {
-    if (confirm('Apakah Anda yakin ingin logout?')) {
-        alert('👋 Terima kasih! Anda telah logout dari sistem.\n\nSampai jumpa kembali!');
-        // menggunakan form POST
-        // window.location.href = '/logout';
-    }
+function confirmLogout() {
+    Swal.fire({
+        title: 'Yakin ingin keluar?',
+        text: "Anda akan keluar dari sesi ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, keluar!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('logout-form').submit();
+        }
+    });
 }
 
 // ========== AUTO CLOSE MODAL ON ESC ==========
@@ -222,6 +248,6 @@ function formatCurrency(input) {
 }
 
 // ========== CONSOLE INFO ==========
-console.log('🌱 Bank Sampah System - Laravel Version');
+console.log('🌱 Bank Sampah System - Petugas Panel');
 console.log('📅 Loaded at:', new Date().toLocaleString('id-ID'));
 console.log('✅ All scripts loaded successfully!');
