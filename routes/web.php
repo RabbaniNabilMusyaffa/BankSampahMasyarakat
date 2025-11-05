@@ -38,4 +38,5 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::get('/kategori', [App\Http\Controllers\AdminController::class, 'riwayat'])->name('admin.kategori');
     Route::get('/kelola', [App\Http\Controllers\AdminController::class, 'penarikan'])->name('admin.kelola');
     Route::get('/laporan', [App\Http\Controllers\AdminController::class, 'pengaturan'])->name('admin.laporan');
+    Route::post('/user', [App\Http\Controllers\AdminController::class, 'tambah'])->name('admin.user');
 });

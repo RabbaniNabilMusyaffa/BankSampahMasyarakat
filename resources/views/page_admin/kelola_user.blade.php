@@ -10,17 +10,27 @@
     <button class="btn btn-primary" onclick="openUserModal('add')">
         <span>➕</span> Tambah User Baru
     </button>
-    
+
     <table id="tableUsers">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>No. HP</th>
-                <th>Aksi</th>
+                <th>id</th>
+                <th>nama</th>
+                <th>email</th>
+                <th>role</th>
+                <th>no. hp</th>
+                <th>status</th>
             </tr>
+            @foreach ($data_user as $item )
+            <tr>
+                <td>{{$item['id']}}</td>
+                <td>{{$item['name']}}</td>
+                <td>{{$item['email']}}</td>
+                <td>{{$item['role']}}</td>
+                <td>{{$item['phone']}}</td>
+                <td>{{$item['status']}}</td>
+            </tr>
+            @endforeach
         </thead>
         <tbody>
             <tr>
@@ -40,11 +50,11 @@
             <h3 id="userModalTitle">👤 Tambah User Baru</h3>
             <button class="close-modal" onclick="closeModal('userModal')">×</button>
         </div>
-        <form id="userForm" method="POST">
+        <form id="userForm" action="{{ route('admin.user') }}" method="POST">
             @csrf
             <input type="hidden" name="_method" id="userMethod" value="POST">
             <input type="hidden" name="user_id" id="userId">
-            
+
             <div class="form-group">
                 <label>Nama Lengkap *</label>
                 <input type="text" name="name" id="userName" placeholder="Masukkan nama lengkap" required>
