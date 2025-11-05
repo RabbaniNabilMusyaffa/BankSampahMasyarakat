@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('role');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['admin', 'petugas', 'pelanggan'])->default('pelanggan');
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
+            $table->string('foto_profil')->nullable();
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -43,7 +47,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
