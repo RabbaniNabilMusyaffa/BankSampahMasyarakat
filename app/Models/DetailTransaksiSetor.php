@@ -28,6 +28,8 @@ class DetailTransaksiSetor extends Model
     // Relasi ke Kategori Sampah
     public function kategoriSampah()
     {
-        return $this->belongsTo(KategoriSampah::class);
+        return $this->belongsTo(KategoriSampah::class, 'kategori_sampah_id');
     }
+
+
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\KategoriSampah;
+use App\Models\TransaksiSetor;
 
 class AdminController extends Controller
 {
@@ -14,7 +16,25 @@ class AdminController extends Controller
     }
     public function riwayat()
     {
-        return view('page_admin.kategori_sampah');
+        $data_sampah=KategoriSampah::all();
+        return view('page_admin.kategori_sampah',compact('data_sampah'));
+    }
+
+    public function kategoriTambah(Request $request)
+    {
+        $request->validate([
+            'nama_kategori' => 'required',
+            'harga_per_kg' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        $user = new \App\Models\KategoriSampah();
+        $user->nama_kategori = $request->nama_kategori;
+        $user->harga_per_kg = $request->harga_per_kg;
+        $user->deskripsi = $request->deskripsi;
+        $user->save();
+
+        return redirect()->route('admin.kategori')->with('success', 'Penambahan kategori berhasil.');
     }
     public function penarikan()
     {
@@ -46,6 +66,7 @@ class AdminController extends Controller
     }
     public function pengaturan()
     {
-        return view('page_admin.laporan');
+        $data_setor=TransaksiSetor::all();
+        return view('page_admin.laporan', compact('data_setor'));
     }
 }

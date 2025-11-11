@@ -7,7 +7,7 @@
 @section('content')
 <div class="content-box">
     <h2>📊 Laporan Transaksi</h2>
-    
+
     <form action="{{ route('admin.laporan') }}" method="GET" class="filter-section">
         <label class="filter-label">Filter Periode:</label>
         <div class="filter-inputs">
@@ -35,6 +35,17 @@
                 <th>Nominal</th>
                 <th>Petugas</th>
             </tr>
+            @foreach ( $data_setor as $setor)
+            <tr>
+                <td>{{$setor['tanggal_setor']}}</td>
+                <td>{{$setor->user['name']}}</td>
+                <td>{{$setor['catatan']}}</td>
+                <td>{{$setor->detailSetor->first()->kategoriSampah['nama_kategori']}}</td>
+                <td>{{$setor['total_berat']}}</td>
+                <td>{{$setor['total_harga']}}</td>
+                <td>{{$setor->petugas['name']}}</td>
+            </tr>
+            @endforeach
         </thead>
         <tbody>
             <tr>
@@ -92,13 +103,13 @@
     document.querySelector('.filter-section').addEventListener('submit', function(e) {
         const startDate = document.getElementById('filterStart').value;
         const endDate = document.getElementById('filterEnd').value;
-        
+
         if (!startDate || !endDate) {
             e.preventDefault();
             alert('Mohon pilih tanggal mulai dan tanggal akhir!');
             return false;
         }
-        
+
         if (new Date(startDate) > new Date(endDate)) {
             e.preventDefault();
             alert('Tanggal mulai tidak boleh lebih besar dari tanggal akhir!');

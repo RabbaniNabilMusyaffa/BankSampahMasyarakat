@@ -10,7 +10,7 @@
     <button class="btn btn-primary" onclick="openKategoriModal('add')">
         <span>➕</span> Tambah Kategori
     </button>
-    
+
     <table id="tableKategori">
         <thead>
             <tr>
@@ -20,6 +20,15 @@
                 <th>Deskripsi</th>
                 <th>Aksi</th>
             </tr>
+            @foreach ($data_sampah as $kategori)
+            <tr>
+                <td>{{ $kategori['id'] }}</td>
+                <td>{{ $kategori['nama_kategori'] }}</td>
+                <td>{{ $kategori['harga_per_kg'] }}</td>
+                <td>{{ $kategori['deskripsi'] }}</td>
+                <td>{{ $kategori['status'] }}</td>
+            </tr>
+            @endforeach
         </thead>
         <tbody>
             <tr>
@@ -39,14 +48,14 @@
             <h3 id="kategoriModalTitle">♻️ Tambah Kategori Sampah</h3>
             <button class="close-modal" onclick="closeModal('kategoriModal')">×</button>
         </div>
-        <form id="kategoriForm" method="POST">
+        <form id="kategoriForm" action="{{ route('admin.kategoriTambah') }}" method="POST">
             @csrf
             <input type="hidden" name="_method" id="kategoriMethod" value="POST">
             <input type="hidden" name="kategori_id" id="kategoriId">
-            
+
             <div class="form-group">
                 <label>Nama Kategori *</label>
-                <input type="text" name="nama" id="kategoriNama" placeholder="Contoh: Plastik, Kertas" required>
+                <input type="text" name="nama_kategori" id="kategoriNama" placeholder="Contoh: Plastik, Kertas" required>
             </div>
             <div class="form-group">
                 <label>Harga per Kg *</label>

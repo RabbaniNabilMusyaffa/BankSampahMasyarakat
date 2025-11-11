@@ -16,7 +16,7 @@
   text: "Aksesmu ngga sah lohhh",
   showConfirmButton: false,
                 timer: 1500
-                                
+
 });
                         </script>
                         </ul>
@@ -56,9 +56,9 @@
                 @forelse($setorans ?? [] as $setoran)
                 <tr>
                     <td>{{ $setoran->created_at->format('H:i') }}</td>
-                    <td>{{ $setoran->pelanggan->nama ?? $setoran->pelanggan_nama }}</td>
-                    <td>{{ $setoran->kategori->nama ?? $setoran->kategori_nama }}</td>
-                    <td>{{ number_format($setoran->berat, 1) }}</td>
+                    <td>{{ $setoran->user->name ?? $setoran->name }}</td>
+                    <td>{{ $setoran->detailSetor->first()->kategoriSampah->nama_kategori ?? $setoran->nama_kategori }}</td>
+                    <td>{{ number_format($setoran->total_berat, 1) }}</td>
                     <td>Rp {{ number_format($setoran->total_harga, 0, ',', '.') }}</td>
                     <td><span class="badge badge-success">Selesai</span></td>
                 </tr>
@@ -78,14 +78,14 @@
                 <h3>Input Setoran Sampah</h3>
                 <button class="close-modal" onclick="closeModal('setoranModal')">×</button>
             </div>
-            <form action="" method="POST" onsubmit="return validateForm(event)">
+            <form action="{{ route('setor_petugas') }}" method="POST" onsubmit="return validateForm(event)">
                 @csrf
                 <div class="form-group">
                     <label>Pilih Pelanggan *</label>
-                    <select name="pelanggan_id" id="pelanggan" required>
+                    <select name="user_id" id="pelanggan" required>
                         <option value="">-- Pilih Pelanggan --</option>
                         @foreach($pelanggans ?? [] as $pelanggan)
-                        <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
+                        <option value="{{ $pelanggan->id }}">{{ $pelanggan->name }}</option>
                         @endforeach
                     </select>
                     @error('pelanggan_id')
@@ -95,11 +95,11 @@
 
                 <div class="form-group">
                     <label>Kategori Sampah *</label>
-                    <select name="kategori_id" id="kategori" required onchange="hitungTotal()">
+                    <select name="kategori_sampah_id" id="kategori" required onchange="hitungTotal()">
                         <option value="">-- Pilih Kategori --</option>
                         @foreach($kategoris ?? [] as $kategori)
                         <option value="{{ $kategori->id }}" data-harga="{{ $kategori->harga_per_kg }}">
-                            {{ $kategori->nama }} (Rp {{ number_format($kategori->harga_per_kg, 0, ',', '.') }}/kg)
+                            {{ $kategori->nama_kategori }} (Rp {{ number_format($kategori->harga_per_kg, 0, ',', '.') }}/kg)
                         </option>
                         @endforeach
                     </select>
@@ -119,7 +119,7 @@
                 <div class="form-group">
                     <label>Total Harga</label>
                     <input type="text" id="total" readonly placeholder="Rp 0">
-                    <input type="hidden" name="total_harga" id="total_harga">
+                    <input type="hidden" name="subtotal" id="total_harga">
                 </div>
 
                 <div class="total-display" id="totalDisplay" style="display: none;">
@@ -128,7 +128,7 @@
 
                 <div class="form-group">
                     <label>Keterangan</label>
-                    <textarea name="keterangan" id="keterangan" rows="2" placeholder="Keterangan tambahan (opsional)"></textarea>
+                    <textarea name="catatan" id="keterangan" rows="2" placeholder="Keterangan tambahan (opsional)"></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-success">✓ Simpan Setoran</button>
@@ -166,7 +166,7 @@ function hitungTotal() {
     const selectedOption = kategoriSelect.options[kategoriSelect.selectedIndex];
     const hargaPerKg = selectedOption.getAttribute('data-harga');
     const berat = document.getElementById('berat').value;
-    
+
     if (hargaPerKg && berat) {
         const total = parseFloat(hargaPerKg) * parseFloat(berat);
         document.getElementById('total').value = 'Rp ' + total.toLocaleString('id-ID');
