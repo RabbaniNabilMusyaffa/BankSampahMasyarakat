@@ -7,12 +7,48 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\KategoriSampah;
 use App\Models\TransaksiSetor;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('page_admin.admin_dashboard');
+        $list_user= User::all()->sortBy('id');
+        $jumlah_user=$list_user->count();
+        $list_transaksi=TransaksiSetor::all()->sortBy('id');
+        $jumlah_setor=$list_transaksi->count();
+        $query=TransaksiSetor::with(['detailSetor.kategoriSampah']);
+        $data_sampah=$query->get();
+        $total_sampah=$data_sampah
+        ->sum('total_berat');
+
+        //ngitung tanggal//
+        $awalBulan=Carbon::now()->startOfMonth();
+        $akhirBulan=Carbon::now()->endOfMonth();
+
+        //ngitung transaksi setiap bulan dan berat//
+        $transaksiSetiapBulan=TransaksiSetor::whereBetween('tanggal_setor', [$awalBulan, $akhirBulan])->get();
+        $jumlahtransaksiSetiapBulan=$transaksiSetiapBulan->count();
+        $totalberatSetiapBulan=$transaksiSetiapBulan->sum('total_berat');
+
+        //ngitung pelanggan aktif//
+        $pelangganBulanIni=Carbon::now()->subDays(30);
+        $jumlahPelangganAktif=TransaksiSetor::where('tanggal_setor', '>=', $pelangganBulanIni)->count();
+
+        //ngitung total saldo//
+        $totalPemasukan = TransaksiSetor::where('catatan', '!=', 'Penarikan')->sum('total_harga');
+        $totalPenarikan = TransaksiSetor::where('catatan', '==', 'Penarikan')->sum('total_harga');
+        $totalSaldoSistem = $totalPemasukan - $totalPenarikan;
+
+        //nunjukin laporan baru//
+        $listTransaksi=TransaksiSetor::whereDate('created_at', Carbon::today())
+        ->orderBy('tanggal_setor', 'desc')
+        ->get();
+
+        return view('page_admin.admin_dashboard', compact('list_user', 'jumlah_user', 'list_transaksi',
+        'jumlah_setor', 'total_sampah', 'data_sampah', 'awalBulan', 'akhirBulan',
+        'transaksiSetiapBulan', 'jumlahtransaksiSetiapBulan', 'totalberatSetiapBulan', 'jumlahPelangganAktif', 'pelangganBulanIni',
+        'totalPemasukan', 'totalPenarikan', 'totalSaldoSistem', 'listTransaksi'));
     }
     public function riwayat()
     {
@@ -66,7 +102,17 @@ class AdminController extends Controller
     }
     public function pengaturan()
     {
-        $data_setor=TransaksiSetor::all();
-        return view('page_admin.laporan', compact('data_setor'));
+        $query = TransaksiSetor::with(['detailSetor.kategoriSampah']);
+        $data_setor = $query->get();
+        $total_pemasukan = $data_setor
+            ->where('catatan', '!=', 'Penarikan')
+            ->sum('total_harga');
+        $total_penarikan = $data_setor
+            ->where('catatan', '==', 'Penarikan')
+            ->sum('total_harga');
+        $total_berat = $data_setor
+            ->sum('total_berat');
+        $saldo_keseluruhan = $total_pemasukan - $total_penarikan;
+        return view('page_admin.laporan', compact('data_setor', 'total_pemasukan', 'total_penarikan', 'total_berat', 'saldo_keseluruhan'));
     }
 }

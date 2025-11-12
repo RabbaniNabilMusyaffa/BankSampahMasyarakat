@@ -20,7 +20,7 @@
                 <th>Deskripsi</th>
                 <th>Aksi</th>
             </tr>
-            @foreach ($data_sampah as $kategori)
+            @forelse ($data_sampah as $kategori)
             <tr>
                 <td>{{ $kategori['id'] }}</td>
                 <td>{{ $kategori['nama_kategori'] }}</td>
@@ -28,8 +28,8 @@
                 <td>{{ $kategori['deskripsi'] }}</td>
                 <td>{{ $kategori['status'] }}</td>
             </tr>
-            @endforeach
         </thead>
+        @empty
         <tbody>
             <tr>
                 <td colspan="5" style="text-align: center; padding: 40px;">
@@ -38,6 +38,7 @@
                 </td>
             </tr>
         </tbody>
+        @endforelse
     </table>
 </div>
 

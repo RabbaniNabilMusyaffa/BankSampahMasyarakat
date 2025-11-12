@@ -15,7 +15,7 @@
         <div class="stat-header">
             <div>
                 <div class="stat-title">Total Pelanggan</div>
-                <div class="stat-value">0</div>
+                <div class="stat-value">{{ $jumlah_user}}</div>
                 <div class="stat-label">Pengguna terdaftar</div>
             </div>
             <div class="stat-icon">👥</div>
@@ -26,7 +26,7 @@
         <div class="stat-header">
             <div>
                 <div class="stat-title">Total Transaksi</div>
-                <div class="stat-value">0</div>
+                <div class="stat-value">{{$jumlah_setor}}</div>
                 <div class="stat-label">Semua transaksi</div>
             </div>
             <div class="stat-icon">📊</div>
@@ -37,7 +37,7 @@
         <div class="stat-header">
             <div>
                 <div class="stat-title">Total Sampah</div>
-                <div class="stat-value">0</div>
+                <div class="stat-value">{{$total_sampah}}</div>
                 <div class="stat-label">Kilogram (Kg)</div>
             </div>
             <div class="stat-icon">♻️</div>
@@ -51,7 +51,7 @@
         <div class="activity-icon">📊</div>
         <div class="activity-content">
             <h3>Transaksi Bulan Ini</h3>
-            <p>Terdapat <strong>0 transaksi</strong> yang telah diproses bulan ini dengan total sampah terkumpul mencapai <strong>0 kg</strong>.</p>
+            <p>Terdapat <strong>{{$jumlahtransaksiSetiapBulan}} transaksi</strong> yang telah diproses bulan ini dengan total sampah terkumpul mencapai <strong>{{ $totalberatSetiapBulan }} kg</strong>.</p>
         </div>
     </div>
 
@@ -59,7 +59,7 @@
         <div class="activity-icon">👥</div>
         <div class="activity-content">
             <h3>Pelanggan Aktif</h3>
-            <p>Sebanyak <strong>0 pelanggan aktif</strong> telah melakukan transaksi setoran sampah dalam 30 hari terakhir.</p>
+            <p>Sebanyak <strong>{{ $jumlahPelangganAktif }} pelanggan aktif</strong> telah melakukan transaksi setoran sampah dalam 30 hari terakhir.</p>
         </div>
     </div>
 
@@ -67,7 +67,7 @@
         <div class="activity-icon">💰</div>
         <div class="activity-content">
             <h3>Total Saldo Sistem</h3>
-            <p>Saldo total di sistem mencapai <strong>Rp 0</strong>.</p>
+            <p>Saldo total di sistem mencapai <strong>Rp {{$totalSaldoSistem}}</strong>.</p>
         </div>
     </div>
 </div>
@@ -84,7 +84,17 @@
                 <th>Nominal</th>
                 <th>Petugas</th>
             </tr>
+            @forelse ($listTransaksi as $Transaksi)
+            <tr>
+                <td>{{$Transaksi->created_at}}</td>
+                <td>{{$Transaksi->user->name}}</td>
+                <td>{{$Transaksi->catatan}}</td>
+                <td>{{$Transaksi->detailSetor->first()->kategoriSampah->nama_kategori}}</td>
+                <td>{{$Transaksi->total_harga}}</td>
+                <td>{{$Transaksi->petugas->name}}</td>
+            </tr>
         </thead>
+        @empty
         <tbody>
             <tr>
                 <td colspan="6" style="text-align: center; padding: 40px;">
@@ -93,6 +103,7 @@
                 </td>
             </tr>
         </tbody>
+        @endforelse
     </table>
 </div>
 @endsection

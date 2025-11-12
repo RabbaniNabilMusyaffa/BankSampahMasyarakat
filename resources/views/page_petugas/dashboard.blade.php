@@ -29,7 +29,7 @@
         </script>
     </div>
         @endif
-    
+
     <!-- Alert Selamat Datang -->
     <div class="alert alert-success">
         <span>Selamat datang, <strong>{{ auth()->user()->name ?? 'Budi Santoso' }}</strong>! Anda login sebagai Petugas Bank Sampah.</span>
@@ -41,7 +41,7 @@
             <div class="stat-header">
                 <div>
                     <div class="stat-title">Transaksi Hari Ini</div>
-                    <div class="stat-value">{{ $totalTransaksi ?? 0 }}</div>
+                    <div class="stat-value">{{ $jumlah_setor}}</div>
                     <div class="stat-label">Total transaksi</div>
                 </div>
                 <div class="stat-icon">
@@ -58,7 +58,7 @@
             <div class="stat-header">
                 <div>
                     <div class="stat-title">Sampah Terkumpul</div>
-                    <div class="stat-value">{{ $totalSampah ?? 0 }}</div>
+                    <div class="stat-value">{{ $total_sampah}}</div>
                     <div class="stat-label">Kilogram (Kg)</div>
                 </div>
                 <div class="stat-icon">♻️</div>
@@ -94,7 +94,7 @@
         <!-- Aktivitas Hari Ini -->
         <div class="content-box">
             <h2>📊 Aktivitas Hari Ini</h2>
-            
+
             <div class="activity-card success">
                 <div class="activity-icon">📄</div>
                 <div class="activity-content">
@@ -120,7 +120,7 @@
             </div>
         </div>
 
-    
+
 @endsection
 
 {{-- @push('scripts')
@@ -128,7 +128,7 @@
     // Periksa jika ada session 'success' dari controller
     @if (session('success'))
         // Jika ada, panggil fungsi toastr.succes
-        
+
         toastr.success("{{ session('success') }}");
     @endif
 

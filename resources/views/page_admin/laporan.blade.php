@@ -35,18 +35,18 @@
                 <th>Nominal</th>
                 <th>Petugas</th>
             </tr>
-            @foreach ( $data_setor as $setor)
+            @forelse ( $data_setor as $setor)
             <tr>
-                <td>{{$setor['tanggal_setor']}}</td>
-                <td>{{$setor->user['name']}}</td>
-                <td>{{$setor['catatan']}}</td>
-                <td>{{$setor->detailSetor->first()->kategoriSampah['nama_kategori']}}</td>
-                <td>{{$setor['total_berat']}}</td>
-                <td>{{$setor['total_harga']}}</td>
-                <td>{{$setor->petugas['name']}}</td>
+                <td>{{$setor->created_at}}</td>
+                <td>{{$setor->user->name}}</td>
+                <td>{{$setor->catatan}}</td>
+                <td>{{$setor->detailSetor->first()->kategoriSampah->nama_kategori}}</td>
+                <td>{{$setor->total_berat}}</td>
+                <td>{{$setor->total_harga}}</td>
+                <td>{{$setor->petugas->name}}</td>
             </tr>
-            @endforeach
         </thead>
+        @empty
         <tbody>
             <tr>
                 <td colspan="7" style="text-align: center; padding: 40px;">
@@ -55,6 +55,7 @@
                 </td>
             </tr>
         </tbody>
+        @endforelse
     </table>
 </div>
 
@@ -65,7 +66,7 @@
             <div class="stat-header">
                 <div>
                     <div class="stat-title">Total Setoran</div>
-                    <div class="stat-value">0</div>
+                    <div class="stat-value">{{ number_format($total_berat ?? 0, 1) }}</div>
                     <div class="stat-label">Kilogram (Kg)</div>
                 </div>
                 <div class="stat-icon">♻️</div>
@@ -76,7 +77,7 @@
             <div class="stat-header">
                 <div>
                     <div class="stat-title">Total Penarikan</div>
-                    <div class="stat-value">Rp 0</div>
+                    <div class="stat-value">Rp {{ number_format($total_penarikan ?? 0) }}</div>
                     <div class="stat-label">Semua penarikan</div>
                 </div>
                 <div class="stat-icon">💰</div>
@@ -87,7 +88,7 @@
             <div class="stat-header">
                 <div>
                     <div class="stat-title">Saldo Tersisa</div>
-                    <div class="stat-value">Rp 0</div>
+                    <div class="stat-value">Rp {{ number_format($total_pemasukan ?? 0) }}</div>
                     <div class="stat-label">Saldo sistem</div>
                 </div>
                 <div class="stat-icon">💳</div>

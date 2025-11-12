@@ -21,7 +21,7 @@
                 <th>no. hp</th>
                 <th>status</th>
             </tr>
-            @foreach ($data_user as $item )
+            @forelse ($data_user as $item )
             <tr>
                 <td>{{$item['id']}}</td>
                 <td>{{$item['name']}}</td>
@@ -30,8 +30,8 @@
                 <td>{{$item['phone']}}</td>
                 <td>{{$item['status']}}</td>
             </tr>
-            @endforeach
         </thead>
+        @empty
         <tbody>
             <tr>
                 <td colspan="6" style="text-align: center; padding: 40px;">
@@ -40,6 +40,7 @@
                 </td>
             </tr>
         </tbody>
+        @endforelse
     </table>
 </div>
 

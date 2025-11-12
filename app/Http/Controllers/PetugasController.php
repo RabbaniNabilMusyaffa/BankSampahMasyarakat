@@ -21,7 +21,13 @@ class PetugasController extends Controller
     // ... fungsi index() dan setoran() Anda biarkan saja ...
     public function index()
     {
-        return view('page_petugas/dashboard');
+        $list_transaksi=TransaksiSetor::whereDate('created_at', Carbon::today())->get();
+        $jumlah_setor=$list_transaksi->count();
+        $query=TransaksiSetor::with(['detailSetor.kategoriSampah']);
+        $data_sampah=$query->get();
+        $total_sampah=$data_sampah
+        ->sum('total_berat');
+        return view('page_petugas.dashboard', compact('list_transaksi','jumlah_setor', 'total_sampah', 'data_sampah'));
     }
     public function setoran()
     {
@@ -100,6 +106,17 @@ class PetugasController extends Controller
 
     public function transaksi()
     {
+        $query = TransaksiSetor::with(['detailSetor.kategoriSampah']);
+        $data_setor = $query->get();
+        $total_pemasukan = $data_setor
+            ->where('catatan', '!=', 'Penarikan')
+            ->sum('total_harga');
+        $total_penarikan = $data_setor
+            ->where('catatan', '==', 'Penarikan')
+            ->sum('total_harga');
+        $total_berat = $data_setor
+            ->sum('total_berat');
+        $saldo_keseluruhan = $total_pemasukan - $total_penarikan;
         return view('page_petugas/transaksi_harian');
     }
     public function validasi()
