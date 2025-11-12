@@ -19,11 +19,11 @@
         </div>
     </form>
 
-    
+
 
     <div class="export-buttons">
-        <button class="btn btn-danger" onclick="alert('Fitur export PDF belum tersedia')">📄 Export PDF</button>
-        <button class="btn btn-success" onclick="alert('Fitur export Excel belum tersedia')">📊 Export Excel</button>
+        <a href="{{ route('admin.pdf', request()->query()) }}" class="btn btn-danger">📄 Export PDF</a>
+        <a href="{{ route('admin.excel', request()->query()) }}" class="btn btn-success">📊 Export Excel</a>
     </div>
 
     <table>

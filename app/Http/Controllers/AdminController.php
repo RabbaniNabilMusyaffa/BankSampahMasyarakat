@@ -9,6 +9,9 @@ use App\Models\KategoriSampah;
 use App\Models\TransaksiSetor;
 use App\Models\TransaksiTarik;
 use Carbon\Carbon;
+use App\Exports\LaporanExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -111,13 +114,20 @@ class AdminController extends Controller
     }
     public function pengaturan(Request $request)
     {
-        $setor = TransaksiSetor::with('user', 'petugas', 'detailSetor.kategoriSampah');
-        $tarik = TransaksiTarik::with('pelanggan', 'validator');
+        $data_laporan = $this->laporanData($request);
         $total_pemasukan = TransaksiSetor::sum('total_harga');
         $total_penarikan = TransaksiTarik::sum('jumlah');
-        $total_berat = $setor->sum('total_berat');
+        $total_berat = TransaksiSetor::sum('total_berat');
         $saldo_keseluruhan = $total_pemasukan - $total_penarikan;
+        return view('page_admin.laporan', compact('total_pemasukan', 'total_penarikan',
+        'total_berat', 'saldo_keseluruhan', 'data_laporan', 'request'));
+    }
 
+    private function laporanData(Request $request)
+    {
+
+        $setor = TransaksiSetor::with('user', 'petugas', 'detailSetor.kategoriSampah');
+        $tarik = TransaksiTarik::with('pelanggan', 'validator');
         if ($request->filled('start_date') && $request->filled('end_date'))
         {
             $awalTanggal = Carbon::parse($request->start_date)->startOfDay();
@@ -127,8 +137,35 @@ class AdminController extends Controller
         }
         $setor = $setor->get();
         $tarik = $tarik->get();
-        $data_laporan = $setor->merge($tarik)->sortByDesc('created_at');
-        return view('page_admin.laporan', compact('setor', 'tarik', 'total_pemasukan', 'total_penarikan',
-        'total_berat', 'saldo_keseluruhan', 'data_laporan', 'request'));
+        return $setor->merge($tarik)->sortByDesc('created_at');
+    }
+
+    private function namaFile(Request $request)
+    {
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $awal = $request->input('start_date');
+            $akhir = $request->input('end_date');
+
+            if ($awal == $akhir) {
+                return 'laporan-transaksi-' . $awal;
+            }
+
+            return 'laporan-transaksi-' . $awal . '_sd_' . $akhir;
+        }
+        return 'laporan-transaksi-semua-' . date('Ymd');
+    }
+    public function exportPDF(Request $request)
+    {
+        $data_laporan = $this->laporanData($request);
+        $namaFile = $this->namaFile($request);
+        $pdf = Pdf::loadView('page_admin.laporan_export', compact('data_laporan'));
+        return $pdf->download($namaFile .'.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $data_laporan = $this->laporanData($request);
+        $namaFile = $this->namaFile($request);
+        return Excel::download(new LaporanExport($data_laporan), $namaFile.'.xlsx');
     }
 }

@@ -44,4 +44,6 @@ Route::middleware(['auth', 'Admin'])->group(function () {
     Route::get('/kelola', [App\Http\Controllers\AdminController::class, 'penarikan'])->name('admin.kelola');
     Route::get('/laporan', [App\Http\Controllers\AdminController::class, 'pengaturan'])->name('admin.laporan');
     Route::post('/user', [App\Http\Controllers\AdminController::class, 'tambah'])->name('admin.user');
+    Route::get('/excel', [App\Http\Controllers\AdminController::class, 'exportExcel'])->name('admin.excel');
+    Route::get('/pdf', [App\Http\Controllers\AdminController::class, 'exportPDF'])->name('admin.pdf');
 });
