@@ -13,6 +13,13 @@
     </div>
     @endif
 
+    @if(session('error'))
+    <div class="alert alert-danger">
+        <span style="font-size: 24px;">❌</span>
+        <span>{{ session('error') }}</span>
+    </div>
+    @endif
+
     <!-- Request Penarikan Pending -->
     <div class="content-box">
         <h2>Validasi Penarikan Saldo</h2>
@@ -28,33 +35,42 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($penarikanPending ?? [] as $penarikan)
-                <tr id="row-{{ $penarikan->id }}">
-                    <td>{{ $penarikan->created_at->format('d/m/Y') }}</td>
-                    <td>{{ $penarikan->pelanggan->nama ?? $penarikan->pelanggan_nama }}</td>
-                    <td>Rp {{ number_format($penarikan->jumlah, 0, ',', '.') }}</td>
-                    <td>{{ $penarikan->keterangan ?? '-' }}</td>
-                    <td><span class="badge badge-warning">Pending</span></td>
-                    <td>
-                        <button class="btn btn-success" onclick="approvePenarikan({{ $penarikan->id }}, '{{ $penarikan->pelanggan->nama ?? $penarikan->pelanggan_nama }}', {{ $penarikan->jumlah }})">
-                            ✓ Setujui
-                        </button>
-                        <button class="btn btn-danger" onclick="rejectPenarikan({{ $penarikan->id }}, '{{ $penarikan->pelanggan->nama ?? $penarikan->pelanggan_nama }}')">
-                            ✗ Tolak
-                        </button>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" style="text-align: center; padding: 40px;">
-                        <div style="color: #a0aec0;">
-                            <span style="font-size: 48px;"></span>
-                            <p style="margin-top: 12px; font-size: 16px;">Tidak ada request penarikan yang menunggu validasi</p>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
+    @forelse($penarikanPending ?? [] as $penarikan)
+    <tr id="row-{{ $penarikan->id }}">
+        <td>{{ $penarikan->created_at->format('d/m/Y') }}</td>
+        
+        {{-- PERBAIKAN 1: Gunakan 'name' (pakai 'e') --}}
+        <td>{{ $penarikan->pelanggan->name ?? 'User Dihapus' }}</td>
+        
+        <td>Rp {{ number_format($penarikan->jumlah, 0, ',', '.') }}</td>
+        
+        {{-- PERBAIKAN 2: 'keterangan' diubah menjadi 'catatan' --}}
+        <td>{{ $penarikan->catatan ?? '-' }}</td>
+        
+        <td><span class="badge badge-warning">Pending</span></td>
+        <td>
+            {{-- PERBAIKAN 1: Gunakan 'name' (pakai 'e') --}}
+            <button class="btn btn-success" onclick="approvePenarikan({{ $penarikan->id }}, '{{ $penarikan->pelanggan->name ?? 'User' }}', {{ $penarikan->jumlah }})">
+                ✓ Setujui
+            </button>
+            
+            {{-- PERBAIKAN 1: Gunakan 'name' (pakai 'e') --}}
+            <button class="btn btn-danger" onclick="rejectPenarikan({{ $penarikan->id }}, '{{ $penarikan->pelanggan->name ?? 'User' }}')">
+                ✗ Tolak
+            </button>
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="6" style="text-align: center; padding: 40px;">
+            <div style="color: #a0aec0;">
+                <span style="font-size: 48px;"></span>
+                <p style="margin-top: 12px; font-size: 16px;">Tidak ada request penarikan yang menunggu validasi</p>
+            </div>
+        </td>
+    </tr>
+    @endforelse
+</tbody>
         </table>
     </div>
 
@@ -124,27 +140,58 @@
 
 @push('scripts')
 <script>
-// Approve Penarikan
-function approvePenarikan(id, nama, jumlah) {
-    if (confirm(`Setujui penarikan saldo atas nama ${nama} sebesar Rp ${jumlah.toLocaleString('id-ID')}?`)) {
-        const form = document.getElementById('approveForm');
-        form.action = `/petugas/validasi/${id}/approve`;
-        form.submit();
+    // FUNGSI APPROVE (SUDAH DIPERBAIKI)
+    function approvePenarikan(id, nama, jumlah) {
+        Swal.fire({
+            title: 'Konfirmasi Persetujuan',
+            text: `Setujui penarikan saldo atas nama ${nama} sebesar Rp ${jumlah.toLocaleString('id-ID')}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Setujui!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('approveForm');
+                
+                // PERBAIKAN: Hapus '/petugas' dari URL
+                form.action = `/validasi/${id}/approve`; 
+                
+                form.submit();
+            }
+        });
     }
-}
 
-// Reject Penarikan
-function rejectPenarikan(id, nama) {
-    const alasan = prompt(`Masukkan alasan penolakan penarikan atas nama ${nama}:`);
-    
-    if (alasan && alasan.trim() !== '') {
-        document.getElementById('alasanPenolakan').value = alasan;
-        const form = document.getElementById('rejectForm');
-        form.action = `/petugas/validasi/${id}/reject`;
-        form.submit();
-    } else if (alasan !== null) {
-        alert('⚠️ Alasan penolakan harus diisi!');
+    // FUNGSI REJECT (SUDAH DIPERBAIKI)
+    function rejectPenarikan(id, nama) {
+        Swal.fire({
+            title: 'Konfirmasi Penolakan',
+            text: `Masukkan alasan penolakan penarikan atas nama ${nama}:`,
+            icon: 'warning',
+            input: 'textarea',
+            inputPlaceholder: 'Alasan penolakan harus diisi...',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Tolak!',
+            cancelButtonText: 'Batal',
+            inputValidator: (value) => {
+                if (!value || value.trim() === '') {
+                    return 'Alasan penolakan harus diisi!';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                document.getElementById('alasanPenolakan').value = result.value;
+                const form = document.getElementById('rejectForm');
+                
+                // PERBAIKAN: Hapus '/petugas' dari URL
+                form.action = `/validasi/${id}/reject`; 
+                
+                form.submit();
+            }
+        });
     }
-}
 </script>
 @endpush

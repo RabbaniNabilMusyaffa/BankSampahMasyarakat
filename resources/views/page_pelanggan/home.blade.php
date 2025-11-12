@@ -64,7 +64,7 @@
     <div class="saldo-utama-content">
         <p class="saldo-utama-label">Saldo Terkini Anda</p>
 
-        <h2 class="saldo-utama-value">Rp {{ number_format($saldoSaatIni ?? 0, 0, ',', '.') }}</h2>
+        <h2 class="saldo-utama-value">Rp {{ number_format($jumlahSaldo ?? 0, 0, ',', '.') }}</h2>
     </div>
     <div class="saldo-utama-icon">
 
@@ -90,8 +90,8 @@
                         </div>
                         <div class="stat-content">
                             <p class="stat-label">Total Setoran</p>
-                            <h3 class="stat-value">120 <span class="stat-unit">kg</span></h3>
-                            <p class="stat-info">45 transaksi selesai</p>
+                            <h3 class="stat-value">{{ $totalSetor }} <span class="stat-unit">kg</span></h3>
+                            <p class="stat-info">{{ $jumlahSetor }} <span class="stat-info">transaksi selesai</span></p>
                         </div>
                     </div>
 
@@ -140,120 +140,89 @@
                                 </svg>
                                 Setoran Terakhir
                             </h3>
-                            <a href="riwayat.blade.php" class="view-all-link">Lihat Semua →</a>
+                            <a href="{{ route('riwayat') }}" class="view-all-link">Lihat Semua →</a>
                         </div>
                         <div class="transaction-list">
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-green">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">Botol Plastik</p>
-                                    <p class="transaction-date">10 Oktober 2025 · 15.0 kg</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-positive">
-                                    <p>+ Rp 45000</p>
-                                    <span class="transaction-status transaction-status-success">Selesai</span>
-                                </div>
-                            </div>
-
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-green">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">Kardus</p>
-                                    <p class="transaction-date">8 Oktober 2025 · 22.5 kg</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-positive">
-                                    <p>+ Rp 67500</p>
-                                    <span class="transaction-status transaction-status-success">Selesai</span>
-                                </div>
-                            </div>
-
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-green">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">Kaleng Aluminium</p>
-                                    <p class="transaction-date">5 Oktober 2025 · 8.5 kg</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-positive">
-                                    <p>+ Rp 42500</p>
-                                    <span class="transaction-status transaction-status-success">Selesai</span>
-                                </div>
-                            </div>
-                        </div>
+    @forelse($riwayatSetor as $setoran)
+        <div class="transaction-item">
+            <div class="transaction-icon transaction-icon-green">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+            </div>
+            <div class="transaction-details">
+                {{-- Mengambil nama kategori dari detail setoran pertama --}}
+                <p class="transaction-name">{{ $setoran->detailSetor->first()->kategoriSampah->nama_kategori ?? 'N/A' }}</p>
+                <p class="transaction-date">
+                    {{ \Carbon\Carbon::parse($setoran->tanggal_setor)->format('d F Y') }}
+                    · 
+                    {{ number_format($setoran->total_berat, 1, '.', ',') }} kg 
+                    {{-- Menggunakan titik sebagai pemisah desimal sesuai gambar --}}
+                </p>
+            </div>
+            <div class="transaction-amount transaction-amount-positive">
+                <p>+ Rp {{ number_format($setoran->total_harga, 0, ',', '.') }}</p>
+                <span class="transaction-status transaction-status-success">Selesai</span>
+            </div>
+        </div>
+    @empty
+        {{-- Pesan ini akan tampil jika tidak ada riwayat setoran --}}
+        <div class="p-4 text-center text-gray-500">Belum ada riwayat setoran sampah.</div>
+    @endforelse
+</div>
                     </div>
 
                     {{-- penarikan --}}
-                    <div class="transaction-card card-base">
-                        <div class="transaction-header">
-                            <h3 class="transaction-title">
-                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                Penarikan Terakhir
-                            </h3>
-                            <a href="penarikan.blade.php" class="view-all-link">Lihat Semua →</a>
-                        </div>
-                        <div class="transaction-list">
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-blue">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">Penarikan</p>
-                                    <p class="transaction-date">9 Oktober 2025</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-negative">
-                                    <p>- Rp 200000</p>
-                                    <span class="transaction-status transaction-status-success">Berhasil</span>
-                                </div>
-                            </div>
-
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-blue">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">Penarikan</p>
-                                    <p class="transaction-date">25 September 2025</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-negative">
-                                    <p>- Rp 150000</p>
-                                    <span class="transaction-status transaction-status-success">Berhasil</span>
-                                </div>
-                            </div>
-
-                            <div class="transaction-item">
-                                <div class="transaction-icon transaction-icon-blue">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                    </svg>
-                                </div>
-                                <div class="transaction-details">
-                                    <p class="transaction-name">Penarikan</p>
-                                    <p class="transaction-date">10 September 2025</p>
-                                </div>
-                                <div class="transaction-amount transaction-amount-negative">
-                                    <p>- Rp 300000</p>
-                                    <span class="transaction-status transaction-status-success">Berhasil</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{-- Ganti seluruh blok <div class="transaction-card card-base"> untuk Penarikan --}}
+<div class="transaction-card card-base">
+    <div class="transaction-header">
+        <h3 class="transaction-title">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {{-- ... (icon svg Anda) ... --}}
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Penarikan Terakhir
+        </h3>
+        {{-- PERBAIKAN: Gunakan route() untuk link --}}
+        <a href="{{ route('penarikan') }}" class="view-all-link">Lihat Semua →</a>
+    </div>
+    <div class="transaction-list">
+        
+        {{-- Ganti data statis dengan loop @forelse --}}
+        @forelse($riwayatTarik ?? [] as $tarik)
+            <div class="transaction-item">
+                <div class="transaction-icon transaction-icon-blue">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                </div>
+                <div class="transaction-details">
+                    {{-- Tampilkan metode (dari 'catatan') jika ada --}}
+                    <p class="transaction-name">Penarikan {{ $tarik->catatan ?? 'Tunai' }}</p>
+                    <p class="transaction-date">{{ \Carbon\Carbon::parse($tarik->tanggal_request)->format('d F Y') }}</p>
+                </div>
+                <div class="transaction-amount transaction-amount-negative">
+                    <p>- Rp {{ number_format($tarik->jumlah, 0, ',', '.') }}</p>
+                    
+                    {{-- Tampilkan status dinamis --}}
+                    @if($tarik->status == 'approved')
+                        <span class="transaction-status transaction-status-success">Berhasil</span>
+                    @elseif($tarik->status == 'rejected')
+                        {{-- Sesuaikan class CSS Anda jika perlu --}}
+                        <span class="transaction-status transaction-status-danger" style="background-color: #fee2e2; color: #dc2626;">Ditolak</span>
+                    @else
+                        {{-- Sesuaikan class CSS Anda jika perlu --}}
+                        <span class="transaction-status transaction-status-warning" style="background-color: #fffbeb; color: #f59e0b;">Pending</span>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <div class="transaction-item" style="justify-content: center;">
+                <p style="color: #718096;">Belum ada riwayat penarikan.</p>
+            </div>
+        @endforelse
+    </div>
+</div></div>
                 </div>
             </div>
         </main>

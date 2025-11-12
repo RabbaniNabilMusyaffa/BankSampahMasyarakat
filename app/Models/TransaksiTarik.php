@@ -29,13 +29,13 @@ class TransaksiTarik extends Model
     ];
 
     // Relasi ke User (Pelanggan)
-    public function user()
+    public function pelanggan()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
     // Relasi ke User (Petugas)
-    public function petugas()
+    public function validator() // petugas
     {
         return $this->belongsTo(User::class, 'petugas_id');
     }

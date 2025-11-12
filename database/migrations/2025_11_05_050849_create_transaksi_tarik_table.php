@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tanggal_request');
             $table->date('tanggal_validasi')->nullable();
             $table->decimal('jumlah', 15, 2);
-            $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
+            $table->varchar('status', 20);
             $table->text('catatan')->nullable();
             $table->text('alasan_penolakan')->nullable();
             $table->timestamps();

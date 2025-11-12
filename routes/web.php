@@ -25,6 +25,8 @@ Route::middleware(['auth', 'Petugas'])->group(function () {
     Route::get('/setoran', [PetugasController::class, 'setoran'])->name('petugas.input-setoran');
     Route::get('/transaksi', [PetugasController::class, 'transaksi'])->name('petugas.transaksi-harian');
     Route::get('/validasi', [PetugasController::class, 'validasi'])->name('petugas.validasi');
+    Route::put('/validasi/{id}/approve', [PetugasController::class, 'approvePenarikan'])->name('validasi.approve');
+    Route::put('/validasi/{id}/reject', [PetugasController::class, 'rejectPenarikan'])->name('validasi.reject');
 });
 
 Route::middleware(['auth', 'Pelanggan'])->group(function () {
@@ -32,10 +34,11 @@ Route::middleware(['auth', 'Pelanggan'])->group(function () {
     Route::get('/penarikan', [App\Http\Controllers\PelangganController::class, 'penarikan'])->name('penarikan');
     Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
     Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
+    Route::post('/pengajuan', [PelangganController::class, 'ajukanPenarikan'])->name('pengajuan');
 });
 
 Route::middleware(['auth', 'Admin'])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dash_admin' );
+    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dash_admin');
     Route::get('/kategori', [App\Http\Controllers\AdminController::class, 'riwayat'])->name('admin.kategori');
     Route::post('/kategoriTambah', [App\Http\Controllers\AdminController::class, 'kategoriTambah'])->name('admin.kategoriTambah');
     Route::get('/kelola', [App\Http\Controllers\AdminController::class, 'penarikan'])->name('admin.kelola');

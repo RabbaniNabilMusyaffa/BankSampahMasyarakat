@@ -123,31 +123,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Withdrawal Form Validation
-    const withdrawalForm = document.querySelector('.withdrawal-form');
-    if (withdrawalForm) {
-        withdrawalForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+    // const withdrawalForm = document.querySelector('.withdrawal-form');
+    // if (withdrawalForm) {
+    //     withdrawalForm.addEventListener('submit', function(e) {
+    //         e.preventDefault();
 
-            const amount = this.querySelector('input[type="number"]').value;
-            const method = this.querySelector('select').value;
-            const account = this.querySelectorAll('input[type="text"]')[0].value;
+    //         const amount = this.querySelector('input[type="number"]').value;
+    //         const method = this.querySelector('select').value;
+    //         const account = this.querySelectorAll('input[type="text"]')[0].value;
 
-            // Validation
-            if (!amount || amount < 50000) {
-                showNotification('Jumlah minimum penarikan adalah Rp 50.000', 'error');
-                return;
-            }
+    //         // Validation
+    //         if (!amount || amount < 50000) {
+    //             showNotification('Jumlah minimum penarikan adalah Rp 50.000', 'error');
+    //             return;
+    //         }
 
-            if (!account) {
-                showNotification('Mohon isi nomor rekening/e-wallet', 'error');
-                return;
-            }
+    //         if (!account) {
+    //             showNotification('Mohon isi nomor rekening/e-wallet', 'error');
+    //             return;
+    //         }
 
-            // Show success message
-            showNotification('Pengajuan penarikan berhasil! Menunggu verifikasi admin.', 'success');
-            this.reset();
-        });
-    }
+    //         // Show success message
+    //         showNotification('Pengajuan penarikan berhasil! Menunggu verifikasi admin.', 'success');
+    //         this.reset();
+    //     });
+    // }
 
     // Settings Form Handler
     const settingsForm = document.querySelector('.settings-form');

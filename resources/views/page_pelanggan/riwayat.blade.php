@@ -63,52 +63,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>10 Oktober 2025</td>
-                                <td>
-                                    <div class="table-item-name">
-
-                                        <span>Botol Plastik</span>
-                                    </div>
-                                </td>
-                                <td>15.0</td>
-                                <td class="table-amount">Rp 45000</td>
-                                <td><span class="transaction-status transaction-status-success">Selesai</span></td>
-                                <td>
-                                    <button class="btn btn-detail">Detail</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>8 Oktober 2025</td>
-                                <td>
-                                    <div class="table-item-name">
-
-                                        <span>Kardus</span>
-                                    </div>
-                                </td>
-                                <td>22.5</td>
-                                <td class="table-amount">Rp 67500</td>
-                                <td><span class="transaction-status transaction-status-success">Selesai</span></td>
-                                <td>
-                                    <button class="btn btn-detail">Detail</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5 Oktober 2025</td>
-                                <td>
-                                    <div class="table-item-name">
-
-                                        <span>Kaleng Aluminium</span>
-                                    </div>
-                                </td>
-                                <td>8.5</td>
-                                <td class="table-amount">Rp 42500</td>
-                                <td><span class="transaction-status transaction-status-success">Selesai</span></td>
-                                <td>
-                                    <button class="btn btn-detail">Detail</button>
-                                </td>
-                            </tr>
-                        </tbody>
+    @forelse($riwayatSetor as $setoran)
+        <tr>
+            <td>
+                {{-- Format tanggal agar mudah dibaca --}}
+                {{ \Carbon\Carbon::parse($setoran->tanggal_setor)->format('d F Y') }}
+            </td>
+            <td>
+                <div class="table-item-name">
+                    {{-- Ambil nama kategori dari detail pertama --}}
+                    <span>{{ $setoran->detailSetor->first()->kategoriSampah->nama_kategori ?? 'N/A' }}</span>
+                </div>
+            </td>
+            <td>
+                {{-- Format berat dengan 1 angka desimal --}}
+                {{ number_format($setoran->total_berat, 1, '.', ',') }}
+            </td>
+            <td class="table-amount">
+                {{-- Format harga --}}
+                Rp {{ number_format($setoran->total_harga, 0, ',', '.') }}
+            </td>
+            <td>
+                {{-- Status (untuk saat ini kita anggap 'Selesai' semua) --}}
+                <span class="transaction-status transaction-status-success">Selesai</span>
+            </td>
+            <td>
+                {{-- Tombol detail, bisa diarahkan ke route detail jika ada --}}
+                <button class="btn btn-detail">Detail</button>
+            </td>
+        </tr>
+    @empty
+        {{-- Ini akan tampil jika $riwayatSetor kosong --}}
+        <tr>
+            <td colspan="6" style="text-align: center; color: #718096; padding: 20px;">
+                Belum ada riwayat setoran.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
                     </table>
                 </div>
             </div>
