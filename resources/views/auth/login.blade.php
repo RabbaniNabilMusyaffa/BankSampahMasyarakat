@@ -30,7 +30,6 @@
 
         .tab-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 35px;
         }
@@ -47,11 +46,7 @@
             font-size: 15px;
         }
 
-        .tab-button.active {
-            background: linear-gradient(135deg, #234cff 0%, #0ad3ff 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
+
 
         .input-field {
             width: 100%;
@@ -144,8 +139,7 @@
         @endif
         <!-- Tab Navigation -->
         <div class="tab-container">
-            <button class="tab-button active" id="loginTab">Login</button>
-            <button class="tab-button" id="registerTab">Daftar</button>
+            <h1 class="text-center">login</h1>
         </div>
 
 
