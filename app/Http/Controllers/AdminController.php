@@ -7,16 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\KategoriSampah;
 use App\Models\TransaksiSetor;
+use App\Models\TransaksiTarik;
 use Carbon\Carbon;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $list_user= User::all()->sortBy('id');
+        $list_user= User::where('role', 'pelanggan')->get();
         $jumlah_user=$list_user->count();
         $list_transaksi=TransaksiSetor::all()->sortBy('id');
         $jumlah_setor=$list_transaksi->count();
+        $list_tarik=TransaksiTarik::all()->sortBy('id');
+        $jumlah_tarik=$list_tarik->count();
+        $data_transaksi=$list_transaksi->merge($list_tarik)->sortByDesc('created_at');
         $query=TransaksiSetor::with(['detailSetor.kategoriSampah']);
         $data_sampah=$query->get();
         $total_sampah=$data_sampah
@@ -36,8 +40,8 @@ class AdminController extends Controller
         $jumlahPelangganAktif=TransaksiSetor::where('tanggal_setor', '>=', $pelangganBulanIni)->count();
 
         //ngitung total saldo//
-        $totalPemasukan = TransaksiSetor::where('catatan', '!=', 'Penarikan')->sum('total_harga');
-        $totalPenarikan = TransaksiSetor::where('catatan', '==', 'Penarikan')->sum('total_harga');
+        $totalPemasukan = TransaksiSetor::sum('total_harga');
+        $totalPenarikan = TransaksiTarik::sum('jumlah');
         $totalSaldoSistem = $totalPemasukan - $totalPenarikan;
 
         //nunjukin laporan baru//
@@ -45,10 +49,15 @@ class AdminController extends Controller
         ->orderBy('tanggal_setor', 'desc')
         ->get();
 
+        $listTarik=TransaksiTarik::whereDate('created_at', Carbon::today())
+        ->orderBy('tanggal_request', 'desc')
+        ->get();
+
+        $listFinal=$listTransaksi->merge($listTarik)->sortByDesc('created_at');
         return view('page_admin.admin_dashboard', compact('list_user', 'jumlah_user', 'list_transaksi',
         'jumlah_setor', 'total_sampah', 'data_sampah', 'awalBulan', 'akhirBulan',
         'transaksiSetiapBulan', 'jumlahtransaksiSetiapBulan', 'totalberatSetiapBulan', 'jumlahPelangganAktif', 'pelangganBulanIni',
-        'totalPemasukan', 'totalPenarikan', 'totalSaldoSistem', 'listTransaksi'));
+        'totalPemasukan', 'totalPenarikan', 'totalSaldoSistem', 'listTransaksi', 'jumlah_tarik', 'list_tarik', 'data_transaksi', 'listTarik', 'listFinal'));
     }
     public function riwayat()
     {
@@ -100,19 +109,26 @@ class AdminController extends Controller
 
         return redirect()->route('admin.kelola')->with('success', 'Penambahan user berhasil.');
     }
-    public function pengaturan()
+    public function pengaturan(Request $request)
     {
-        $query = TransaksiSetor::with(['detailSetor.kategoriSampah']);
-        $data_setor = $query->get();
-        $total_pemasukan = $data_setor
-            ->where('catatan', '!=', 'Penarikan')
-            ->sum('total_harga');
-        $total_penarikan = $data_setor
-            ->where('catatan', '==', 'Penarikan')
-            ->sum('total_harga');
-        $total_berat = $data_setor
-            ->sum('total_berat');
+        $setor = TransaksiSetor::with('user', 'petugas', 'detailSetor.kategoriSampah');
+        $tarik = TransaksiTarik::with('pelanggan', 'validator');
+        $total_pemasukan = TransaksiSetor::sum('total_harga');
+        $total_penarikan = TransaksiTarik::sum('jumlah');
+        $total_berat = $setor->sum('total_berat');
         $saldo_keseluruhan = $total_pemasukan - $total_penarikan;
-        return view('page_admin.laporan', compact('data_setor', 'total_pemasukan', 'total_penarikan', 'total_berat', 'saldo_keseluruhan'));
+
+        if ($request->filled('start_date') && $request->filled('end_date'))
+        {
+            $awalTanggal = Carbon::parse($request->start_date)->startOfDay();
+            $akhirTanggal = Carbon::parse($request->end_date)->endOfDay();
+            $setor->whereBetween('created_at', [$awalTanggal, $akhirTanggal]);
+            $tarik->whereBetween('created_at', [$awalTanggal, $akhirTanggal]);
+        }
+        $setor = $setor->get();
+        $tarik = $tarik->get();
+        $data_laporan = $setor->merge($tarik)->sortByDesc('created_at');
+        return view('page_admin.laporan', compact('setor', 'tarik', 'total_pemasukan', 'total_penarikan',
+        'total_berat', 'saldo_keseluruhan', 'data_laporan', 'request'));
     }
 }

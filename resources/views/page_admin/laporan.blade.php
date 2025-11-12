@@ -19,6 +19,8 @@
         </div>
     </form>
 
+    
+
     <div class="export-buttons">
         <button class="btn btn-danger" onclick="alert('Fitur export PDF belum tersedia')">📄 Export PDF</button>
         <button class="btn btn-success" onclick="alert('Fitur export Excel belum tersedia')">📊 Export Excel</button>
@@ -35,15 +37,24 @@
                 <th>Nominal</th>
                 <th>Petugas</th>
             </tr>
-            @forelse ( $data_setor as $setor)
+            @forelse ( $data_laporan as $laporan)
             <tr>
-                <td>{{$setor->created_at}}</td>
-                <td>{{$setor->user->name}}</td>
-                <td>{{$setor->catatan}}</td>
-                <td>{{$setor->detailSetor->first()->kategoriSampah->nama_kategori}}</td>
-                <td>{{$setor->total_berat}}</td>
-                <td>{{$setor->total_harga}}</td>
-                <td>{{$setor->petugas->name}}</td>
+                <td>{{$laporan->created_at}}</td>
+                @if ($laporan instanceof \App\Models\TransaksiTarik)
+                <td>{{$laporan->pelanggan->name ?? 'N/A'}}</td>
+                <td>Penarikan</td>
+                <td>{{ $laporan->status }}</td>
+                <td></td>
+                <td>{{ $laporan->jumlah }}</td>
+                <td>{{$laporan->validator->name}}</td>
+                @else
+                <td>{{$laporan->user->name ?? 'N/A'}}</td>
+                <td>{{$laporan->catatan}}</td>
+                <td>{{$laporan->detailSetor->first()?->kategoriSampah?->nama_kategori ?? 'N/A'}}</td>
+                <td>{{$laporan->total_berat}}</td>
+                <td>{{$laporan->total_harga}}</td>
+                <td>{{$laporan->petugas->name}}</td>
+                @endif
             </tr>
         </thead>
         @empty
@@ -88,7 +99,7 @@
             <div class="stat-header">
                 <div>
                     <div class="stat-title">Saldo Tersisa</div>
-                    <div class="stat-value">Rp {{ number_format($total_pemasukan ?? 0) }}</div>
+                    <div class="stat-value">Rp {{ number_format($saldo_keseluruhan ?? 0) }}</div>
                     <div class="stat-label">Saldo sistem</div>
                 </div>
                 <div class="stat-icon">💳</div>

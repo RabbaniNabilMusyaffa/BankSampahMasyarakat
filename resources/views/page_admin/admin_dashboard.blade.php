@@ -26,7 +26,7 @@
         <div class="stat-header">
             <div>
                 <div class="stat-title">Total Transaksi</div>
-                <div class="stat-value">{{$jumlah_setor}}</div>
+                <div class="stat-value">{{$jumlah_setor + $jumlah_tarik}}</div>
                 <div class="stat-label">Semua transaksi</div>
             </div>
             <div class="stat-icon">📊</div>
@@ -84,14 +84,22 @@
                 <th>Nominal</th>
                 <th>Petugas</th>
             </tr>
-            @forelse ($listTransaksi as $Transaksi)
+            @forelse ($listFinal as $Final)
             <tr>
-                <td>{{$Transaksi->created_at}}</td>
-                <td>{{$Transaksi->user->name}}</td>
-                <td>{{$Transaksi->catatan}}</td>
-                <td>{{$Transaksi->detailSetor->first()->kategoriSampah->nama_kategori}}</td>
-                <td>{{$Transaksi->total_harga}}</td>
-                <td>{{$Transaksi->petugas->name}}</td>
+                <td>{{$Final->created_at}}</td>
+                @if ($Final instanceof \App\Models\TransaksiTarik)
+                <td>{{$Final->pelanggan->name ?? 'N/A'}}</td>
+                <td>Penarikan</td>
+                <td>{{ $Final->status }}</td>
+                <td>{{ $Final->jumlah }}</td>
+                <td>{{$Final->validator->name}}</td>
+                @else
+                <td>{{$Final->user->name}}</td>
+                <td>{{$Final->catatan}}</td>
+                <td>{{$Final->detailSetor->first()->kategoriSampah->nama_kategori}}</td>
+                <td>{{$Final->total_harga}}</td>
+                <td>{{$Final->petugas->name}}</td>
+                @endif
             </tr>
         </thead>
         @empty
