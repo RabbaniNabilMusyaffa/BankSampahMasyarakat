@@ -149,44 +149,21 @@ class PelangganController extends Controller
     // --- FUNGSI BARU UNTUK MENYIMPAN PROFILE ---
     public function updatePengaturan(Request $request)
     {
-        // $user = Auth::user(); // Intelephense kadang bingung dengan return type ini
-
-        // PERBAIKAN LINTER: Ambil instance User secara eksplisit
-        $user = User::find(Auth::id());
-
-        if (!$user) {
-            return redirect()->back()->with('error', 'Gagal menemukan data pengguna.');
-        }
-
-        // 1. Validasi Data
-        // (Pastikan nama kolom di tabel 'users' Anda sesuai, misal: 'no_telepon', 'tanggal_lahir', 'alamat')
+        $user = Auth::user();
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($user->id), // Cek email unik, kecuali untuk user ini
-            ],
-            'no_telepon' => 'nullable|string|max:15',
-            'tanggal_lahir' => 'nullable|date',
-            'alamat' => 'nullable|string|max:500',
+            'name' => 'nullable',
+            'email' => 'nullable',
+            'phone' => 'nullable',
+            'date' => 'nullable',
+            'address' => 'nullable',
         ]);
 
-        // 2. Simpan Data
-        // (Gantilah 'no_telepon', 'tanggal_lahir', 'alamat' jika nama kolom di database Anda berbeda)
-        try {
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->no_telepon = $request->no_telepon;
-            $user->tanggal_lahir = $request->tanggal_lahir;
-            $user->alamat = $request->alamat;
-            $user->save();
-
-            return redirect()->route('pengaturan')->with('success', 'Profile berhasil diperbarui!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal memperbarui profile: ' . $e->getMessage());
-        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->date = $request->date;
+        $user->address = $request->address;
+        $user->save();
+        return redirect()->route('pengaturan')->with('success', 'Profile berhasil diperbarui.');
     }
 }

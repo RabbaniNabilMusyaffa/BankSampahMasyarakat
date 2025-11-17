@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'petugas', 'pelanggan'])->default('pelanggan');
             $table->string('phone')->nullable();
+            $table->date('date')->nullable();
             $table->text('address')->nullable();
             $table->string('foto_profil')->nullable();
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');

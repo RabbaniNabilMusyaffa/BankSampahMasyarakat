@@ -46,32 +46,33 @@
                         <button class="btn btn-secondary">Ubah Foto</button>
                     </div>
 
-                    <form class="settings-form">
+                    <form class="settings-form" action="{{ route('pelanggan.pengaturan.update') }}" method="POST">
+                        @csrf
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Nama Lengkap</label>
-                                <input type="text" value="Bambang" class="form-input">
+                                <input type="text" name="name" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" value="BambangGentolet@email.com" class="form-input">
+                                <input type="email"  name="email" class="form-input">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Nomor Telepon</label>
-                                <input type="tel" value="+62 812-3456-7890" class="form-input">
+                                <input type="tel" name="phone" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Tanggal Lahir</label>
-                                <input type="date" class="form-input">
+                                <input type="date" name="date" class="form-input">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Alamat Lengkap</label>
-                            <textarea rows="3" class="form-input">Jl. Jambangan No.456, Surabaya</textarea>
+                            <textarea rows="3" name="address" class="form-input"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
