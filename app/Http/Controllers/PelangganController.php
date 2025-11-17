@@ -21,16 +21,36 @@ class PelangganController extends Controller
     public function index()
     {
         $userId = Auth::id();
+        $sekarang = Carbon::now();
+
         $saldoPelanggan = SaldoPelanggan::where('user_id', $userId)->first();
         $jumlahSaldo = $saldoPelanggan ? $saldoPelanggan->saldo : 0;
 
         // Menghitung total berat setor (Hanya user ini)
         $totalBerat = TransaksiSetor::where('user_id', $userId)->sum('total_berat');
 
+        // --- LOGIKA BARU UNTUK POIN EKO ---
+        // Aturan: 100 poin untuk setiap 10 kg. Di bawah 10 kg = 0 poin.
+        // Kita gunakan floor() untuk pembulatan ke bawah.
+        $totalPoin = floor($totalBerat / 10) * 100;
+        // --- AKHIR LOGIKA POIN ---
+
         // PERBAIKAN: Hitung jumlah setoran HARI INI (Hanya user ini)
         $jumlahSetorHariIni = TransaksiSetor::where('user_id', $userId)
-            ->whereDate('created_at', Carbon::today())
+            ->whereDate('created_at', $sekarang->today())
             ->count();
+
+        // --- LOGIKA BARU UNTUK KARTU PENDAPATAN ---
+        $pendapatanBulanIni = TransaksiSetor::where('user_id', $userId)
+            ->whereYear('tanggal_setor', $sekarang->year)
+            ->whereMonth('tanggal_setor', $sekarang->month)
+            ->sum('total_harga');
+
+        $transaksiBulanIni = TransaksiSetor::where('user_id', $userId)
+            ->whereYear('tanggal_setor', $sekarang->year)
+            ->whereMonth('tanggal_setor', $sekarang->month)
+            ->count();
+        // --- AKHIR DARI LOGIKA BARU ---
 
         // Ambil 3 riwayat setor terakhir (Hanya user ini)
         $riwayatSetor = TransaksiSetor::where('user_id', $userId)
@@ -45,13 +65,16 @@ class PelangganController extends Controller
             ->take(3)
             ->get();
 
-        // PERBAIKAN LINTER: Gunakan notasi titik
+        // Kirim semua data ke view
         return view('page_pelanggan.home', [
             'jumlahSaldo' => $jumlahSaldo,
             'totalSetor' => $totalBerat,
-            'jumlahSetor' => $jumlahSetorHariIni, // <-- Menggunakan variabel yang sudah diperbaiki
+            'jumlahSetor' => $jumlahSetorHariIni,
             'riwayatSetor' => $riwayatSetor,
-            'riwayatTarik' => $riwayatTarik
+            'riwayatTarik' => $riwayatTarik,
+            'pendapatanBulanIni' => $pendapatanBulanIni,
+            'transaksiBulanIni' => $transaksiBulanIni,
+            'totalPoin' => $totalPoin, // <-- Data poin baru dikirim
         ]);
     }
 

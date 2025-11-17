@@ -107,8 +107,8 @@
 
                         <div class="stat-content">
                             <p class="stat-label">Pendapatan Bulan Ini</p>
-                            <h3 class="stat-value">Rp 855000<span class="stat-unit">,-</span></h3>
-                            <p class="stat-info">Dari 12 transaksi</p>
+                            <h3 class="stat-value">Rp {{ $pendapatanBulanIni }}<span class="stat-unit">,-</span></h3>
+                            <p class="stat-info">Dari {{$jumlahSetor }} transaksi</p>
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                         </div>
                         <div class="stat-content">
                             <p class="stat-label">Poin Eko Anda</p>
-                            <h3 class="stat-value">120 <span class="stat-unit">Poin</span></h3>
+                            <h3 class="stat-value">{{ $totalPoin }} <span class="stat-unit">Poin</span></h3>
                             <p class="stat-info">Tukar hadiah menarik!</p>
                         </div>
                     </div>
