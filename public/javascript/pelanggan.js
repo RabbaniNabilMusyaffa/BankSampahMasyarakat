@@ -150,13 +150,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // }
 
     // Settings Form Handler
-    const settingsForm = document.querySelector('.settings-form');
-    if (settingsForm) {
-        settingsForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            showNotification('Data profile berhasil diperbarui!', 'success');
-        });
-    }
+    // const settingsForm = document.querySelector('.settings-form');
+    // if (settingsForm) {
+    //     settingsForm.addEventListener('submit', function(e) {
+    //         e.preventDefault();
+    //         showNotification('Data profile berhasil diperbarui!', 'success');
+    //     });
+    // }
 
     // Toggle Switch Handler
     const toggleInputs = document.querySelectorAll('.toggle-input');

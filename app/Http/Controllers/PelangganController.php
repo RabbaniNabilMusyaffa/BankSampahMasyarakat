@@ -13,6 +13,8 @@ use App\Models\KategoriSampah; // <-- Anda kekurangan ini di file asli, tambahka
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\User; // <-- Pastikan ini ada
+use Illuminate\Validation\Rule;
 
 class PelangganController extends Controller
 {
@@ -62,7 +64,7 @@ class PelangganController extends Controller
             ->paginate(10); // Tampilkan 10 item per halaman
 
         // PERBAIKAN LINTER: Gunakan notasi titik
-        return view('page_pelanggan.riwayat', [ 
+        return view('page_pelanggan.riwayat', [
             'riwayatSetor' => $riwayatSetor
         ]);
     }
@@ -89,7 +91,7 @@ class PelangganController extends Controller
         $userId = Auth::id();
         $saldoPelanggan = SaldoPelanggan::where('user_id', $userId)->first();
         $saldoSaatIni = $saldoPelanggan ? $saldoPelanggan->saldo : 0;
-        
+
         $request->validate([
             'jumlah' => 'required|numeric|min:50000|max:' . $saldoSaatIni,
             'metode' => 'required|string',
@@ -109,15 +111,59 @@ class PelangganController extends Controller
             ]);
 
             return redirect()->route('penarikan')->with('success', 'Pengajuan penarikan berhasil. Menunggu validasi petugas.');
-        
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengajukan penarikan: ' . $e->getMessage());
         }
     }
-    
+
     public function pengaturan()
     {
-        // PERBAIKAN LINTER: Gunakan notasi titik
-        return view('page_pelanggan.pengaturan');
+        // Ambil data user yang sedang login dan kirim ke view
+        $user = Auth::user();
+        return view('page_pelanggan.pengaturan', compact('user'));
+    }
+
+    // --- FUNGSI BARU UNTUK MENYIMPAN PROFILE ---
+    public function updatePengaturan(Request $request)
+    {
+        // $user = Auth::user(); // Intelephense kadang bingung dengan return type ini
+
+        // PERBAIKAN LINTER: Ambil instance User secara eksplisit
+        $user = User::find(Auth::id());
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'Gagal menemukan data pengguna.');
+        }
+
+        // 1. Validasi Data
+        // (Pastikan nama kolom di tabel 'users' Anda sesuai, misal: 'no_telepon', 'tanggal_lahir', 'alamat')
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($user->id), // Cek email unik, kecuali untuk user ini
+            ],
+            'no_telepon' => 'nullable|string|max:15',
+            'tanggal_lahir' => 'nullable|date',
+            'alamat' => 'nullable|string|max:500',
+        ]);
+
+        // 2. Simpan Data
+        // (Gantilah 'no_telepon', 'tanggal_lahir', 'alamat' jika nama kolom di database Anda berbeda)
+        try {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->no_telepon = $request->no_telepon;
+            $user->tanggal_lahir = $request->tanggal_lahir;
+            $user->alamat = $request->alamat;
+            $user->save();
+
+            return redirect()->route('pengaturan')->with('success', 'Profile berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui profile: ' . $e->getMessage());
+        }
     }
 }
