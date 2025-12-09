@@ -50,24 +50,24 @@
         <h2 class="balance-amount">Rp {{ number_format($jumlahSaldo ?? 0, 0, ',', '.') }}</h2>
     </div>
 
-    <form class="withdrawal-form card-base" 
-      method="POST" 
+    <form class="withdrawal-form card-base"
+      method="POST"
       action="{{ route('pengajuan') }}">
-    
+
     @csrf
 
     <div class="form-group">
         <label class="form-label">Jumlah Penarikan</label>
-        
-        <input type="number" 
-               name="jumlah" 
-               placeholder="Masukkan jumlah" 
-               class="form-input" 
-               required 
+
+        <input type="number"
+               name="jumlah"
+               placeholder="Masukkan jumlah"
+               class="form-input"
+               required
                min="50000">  {{-- <-- 1. VALIDASI HTML (CLIENT-SIDE) --}}
-        
+
         <p class="form-helper">Minimum penarikan Rp 50.000</p>
-        
+
         {{-- 2. TAMPILKAN ERROR DARI SERVER (SERVER-SIDE) --}}
         @error('jumlah')
             <small style="color: red; margin-top: 5px;">{{ $message }}</small>
@@ -110,7 +110,7 @@
         <div class="transaction-amount transaction-amount-negative">
             {{-- TAMBAHKAN TANDA MINUS (-) --}}
             <p>- Rp {{ number_format($tarik->jumlah, 0, ',', '.') }}</p>
-            
+
             @if($tarik->status == 'approved')
                 <span class="transaction-status transaction-status-success">Berhasil</span>
             @elseif($tarik->status == 'rejected')
@@ -125,7 +125,7 @@
         <p style="color: #718096;">Belum ada riwayat penarikan.</p>
     </div>
     @endforelse
-    
+
 </div>
 </div>
                 </div>
