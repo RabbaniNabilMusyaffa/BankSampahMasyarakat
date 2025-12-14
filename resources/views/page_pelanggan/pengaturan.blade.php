@@ -25,7 +25,7 @@
                         </div>
                       @endif
     <div class="app-container">
-        @include('navbar.navigation')
+        @include('navbar.nav-pelanggan')
 
         <main class="main-content">
             <div class="content-wrapper">

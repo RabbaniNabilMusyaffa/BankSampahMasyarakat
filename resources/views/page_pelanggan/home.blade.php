@@ -38,7 +38,7 @@
                       @endif
     <div class="app-container">
         {{-- sidebar --}}
-        @include('navbar.navigation')
+        @include('navbar.nav-pelanggan')
 
         {{-- konten --}}
         <main class="main-content">
@@ -155,8 +155,8 @@
                 <p class="transaction-name">{{ $setoran->detailSetor->first()->kategoriSampah->nama_kategori ?? 'N/A' }}</p>
                 <p class="transaction-date">
                     {{ \Carbon\Carbon::parse($setoran->tanggal_setor)->format('d F Y') }}
-                    · 
-                    {{ number_format($setoran->total_berat, 1, '.', ',') }} kg 
+                    ·
+                    {{ number_format($setoran->total_berat, 1, '.', ',') }} kg
                     {{-- Menggunakan titik sebagai pemisah desimal sesuai gambar --}}
                 </p>
             </div>
@@ -187,7 +187,7 @@
         <a href="{{ route('penarikan') }}" class="view-all-link">Lihat Semua →</a>
     </div>
     <div class="transaction-list">
-        
+
         {{-- Ganti data statis dengan loop @forelse --}}
         @forelse($riwayatTarik ?? [] as $tarik)
             <div class="transaction-item">
@@ -203,7 +203,7 @@
                 </div>
                 <div class="transaction-amount transaction-amount-negative">
                     <p>- Rp {{ number_format($tarik->jumlah, 0, ',', '.') }}</p>
-                    
+
                     {{-- Tampilkan status dinamis --}}
                     @if($tarik->status == 'approved')
                         <span class="transaction-status transaction-status-success">Berhasil</span>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('navbar.nav-petugas')
 
 @section('title', 'Transaksi Hari Ini - Bank Sampah')
 
@@ -37,14 +37,14 @@
 </div>
     <div class="content-box">
         <h2>Semua Transaksi Hari Ini</h2>
-        
+
         <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
             <div style="background: #edf2f7; padding: 12px 20px; border-radius: 8px;">
-                <strong style="color: #2d3748;">Total Transaksi:</strong> 
+                <strong style="color: #2d3748;">Total Transaksi:</strong>
                 <span style="color: #48bb78; font-weight: 700;">{{ ($jumlahSetoran ?? 0) + ($jumlahPenarikan ?? 0) }} Transaksi</span>
             </div>
             <div style="background: #edf2f7; padding: 12px 20px; border-radius: 8px;">
-                <strong style="color: #2d3748;">Tanggal:</strong> 
+                <strong style="color: #2d3748;">Tanggal:</strong>
                 <span style="color: #4299e1; font-weight: 700;">{{ date('d F Y') }}</span>
             </div>
         </div>
@@ -101,7 +101,7 @@
             </tbody>
         </table>
 
-        {{-- 
+        {{--
         @if(isset($transaksis) && method_exists($transaksis, 'links'))
         <div style="margin-top: 24px;">
             {{ $transaksis->links() }}
@@ -144,5 +144,5 @@
             </div>
         </div>
     </div>
- 
+
 @endsection

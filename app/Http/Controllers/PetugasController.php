@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request; // <-- Ini untuk $request
+use Illuminate\Http\Request;
 use App\Models\TransaksiSetor;
 use App\Models\TransaksiTarik;
 use App\Models\DetailTransaksiSetor;
@@ -17,14 +17,11 @@ use Carbon\Carbon;
 
 class PetugasController extends Controller
 {
-    // ... fungsi index() dan setoran() Anda biarkan saja ...
+
     public function index()
     {
         $today = Carbon::today();
-        $petugasId = Auth::id(); // Mengambil ID petugas yang sedang login
-
-        // --- 1. Data untuk Stat Cards (Bagian Atas) ---
-
+        $petugasId = Auth::id();
         // Card 1: Transaksi Hari Ini (Setoran)
         $transaksiSetorHariIni = TransaksiSetor::whereDate('created_at', $today)->get();
         $jumlah_setor = $transaksiSetorHariIni->count();
@@ -35,8 +32,6 @@ class PetugasController extends Controller
         // Card 3: Request Penarikan (Semua yang masih 'pending')
         $totalPenarikan = TransaksiTarik::where('status', 'pending')->count();
 
-        // --- 2. Data untuk "Aktivitas Hari Ini" ---
-
         // Aktivitas 1: Setoran Terakhir Hari Ini
         $setoran = TransaksiSetor::with(['user', 'detailSetor.kategoriSampah'])
             ->whereDate('created_at', $today)
@@ -45,10 +40,10 @@ class PetugasController extends Controller
 
         $setoranTerakhir = null;
         if ($setoran) {
-            // Buat objek kustom agar sesuai dengan view
+
             $setoranTerakhir = (object) [
                 'waktu' => $setoran->created_at->format('H:i'),
-                'nama_nasabah' => $setoran->user->name ?? 'N/A', // Ganti 'nama' menjadi 'name'
+                'nama_nasabah' => $setoran->user->name ?? 'N/A',
                 'kategori' => $setoran->detailSetor->first()->kategoriSampah->nama_kategori ?? 'sampah',
                 'berat' => $setoran->total_berat
             ];
@@ -56,18 +51,17 @@ class PetugasController extends Controller
 
         // Aktivitas 2: Penarikan Terakhir Hari Ini (Request Terbaru)
         $penarikan = TransaksiTarik::with('pelanggan')
-            ->whereDate('tanggal_request', $today) // Berdasarkan kapan di-request
+            ->whereDate('tanggal_request', $today)
             ->orderBy('tanggal_request', 'desc')
             ->first();
 
         $penarikanTerakhir = null;
         if ($penarikan) {
-            // Buat objek kustom agar sesuai dengan view
             $penarikanTerakhir = (object) [
                 'waktu' => $penarikan->created_at->format('H:i'),
-                'nama_nasabah' => $penarikan->pelanggan->name ?? 'N/A', // Ganti 'nama' menjadi 'name'
+                'nama_nasabah' => $penarikan->pelanggan->name ?? 'N/A',
                 'jumlah' => $penarikan->jumlah,
-                'status' => ucfirst($penarikan->status) // misal: 'Pending'
+                'status' => ucfirst($penarikan->status)
             ];
         }
 
@@ -80,7 +74,7 @@ class PetugasController extends Controller
         $totalDisetujui = $validasiHariIni->where('status', 'approved')->count();
         $totalDitolak = $validasiHariIni->where('status', 'rejected')->count();
 
-        // --- 3. Kirim semua data ke View ---
+
         return view('page_petugas.dashboard', compact(
             'jumlah_setor',
             'total_sampah',
@@ -104,27 +98,25 @@ class PetugasController extends Controller
         ]);
     }
 
-
-    // --- GANTI FUNGSI INI ---
     public function setor(Request $request)
     {
         // 1. Validasi (tambahkan validasi yang lebih baik)
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'kategori_sampah_id' => 'required|exists:kategori_sampah,id',
-            'berat' => 'required|numeric|min:0.1', // Asumsi berat minimal 0.1
+            'berat' => 'required|numeric|min:0.1',
             'subtotal' => 'required|numeric|min:0',
-            'catatan' => 'nullable|string', // Catatan boleh kosong
+            'catatan' => 'nullable|string',
         ]);
 
-        // 2. Mulai Database Transaction
+
         DB::beginTransaction();
 
         try {
             // 3. SIMPAN KE TABEL HEADER (transaksi_setor)
             $transaksi = new TransaksiSetor();
-            $transaksi->user_id = $request->user_id;        // ID Pelanggan
-            $transaksi->petugas_id = Auth::id();           // ID Petugas
+            $transaksi->user_id = $request->user_id;
+            $transaksi->petugas_id = Auth::id();
             $transaksi->tanggal_setor = Carbon::now();
 
             // Gunakan generator kode dari model jika ada
@@ -133,11 +125,11 @@ class PetugasController extends Controller
             $transaksi->total_berat = $request->berat;
             $transaksi->total_harga = $request->subtotal;
             $transaksi->catatan = $request->catatan;
-            $transaksi->save(); // Simpan ke tabel 'transaksi_setor'
+            $transaksi->save();
 
             // 4. SIMPAN KE TABEL DETAIL (detail_transaksi_setor)
             $detail = new DetailTransaksiSetor();
-            $detail->transaksi_setor_id = $transaksi->id; // <-- PENTING
+            $detail->transaksi_setor_id = $transaksi->id;
             $detail->kategori_sampah_id = $request->kategori_sampah_id;
             $detail->berat = $request->berat;
             $detail->subtotal = $request->subtotal;
@@ -149,11 +141,11 @@ class PetugasController extends Controller
             }
             $detail->save(); // Simpan ke tabel 'detail_transaksi_setor'
 
-            // 5. UPDATE SALDO PELANGGAN (INI BAGIAN TAMBAHANNYA)
+
             // Cari saldo pelanggan, atau buat baru jika tidak ada
             $saldoPelanggan = SaldoPelanggan::firstOrCreate(
                 ['user_id' => $request->user_id],
-                ['saldo' => 0, 'total_setor' => 0, 'total_tarik' => 0] // Nilai default jika baru dibuat
+                ['saldo' => 0, 'total_setor' => 0, 'total_tarik' => 0]
             );
 
             // Panggil method helper dari model SaldoPelanggan
@@ -170,7 +162,6 @@ class PetugasController extends Controller
             return redirect()->back()->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
         }
     }
-    // -------------------------
 
 
     public function transaksi()
@@ -186,15 +177,15 @@ class PetugasController extends Controller
         // Kita ambil yang 'approved' karena itu transaksi yang "terjadi"
         $penarikan = TransaksiTarik::with(['pelanggan', 'validator'])
             ->where('status', 'approved')
-            ->whereDate('tanggal_validasi', $today) // <- Pakai tanggal_validasi
+            ->whereDate('tanggal_validasi', $today)
             ->get();
 
         // 3. Tambahkan properti kustom untuk standarisasi
         $setoran->each(function ($item) {
             $item->jenis_transaksi = 'setoran';
             $item->waktu = $item->created_at;
-            $item->pelanggan_data = $item->user;     // Standarisasi relasi pelanggan
-            $item->petugas_data = $item->petugas;    // Standarisasi relasi petugas
+            $item->pelanggan_data = $item->user;
+            $item->petugas_data = $item->petugas;
             $item->nominal = $item->total_harga;
         });
 
@@ -229,13 +220,13 @@ class PetugasController extends Controller
     {
 
         $penarikanPending = TransaksiTarik::where('status', 'pending')
-            ->with('pelanggan') // Eager load relasi pelanggan
+            ->with('pelanggan')
             ->orderBy('tanggal_request', 'asc')
             ->get();
         $riwayatValidasi = TransaksiTarik::whereIn('status', ['approved', 'rejected'])
-            ->with(['pelanggan', 'validator']) // Eager load pelanggan & validator
+            ->with(['pelanggan', 'validator'])
             ->orderBy('tanggal_validasi', 'desc')
-            ->paginate(10); // Pakai pagination untuk riwayat
+            ->paginate(10); 
 
         return view('page_petugas/validasi', compact('penarikanPending', 'riwayatValidasi'));
     }

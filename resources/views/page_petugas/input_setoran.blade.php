@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('navbar.nav-petugas')
 
 @section('title', 'Input Setoran - Bank Sampah')
 

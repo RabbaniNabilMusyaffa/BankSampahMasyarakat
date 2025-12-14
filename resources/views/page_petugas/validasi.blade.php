@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('navbar.nav-petugas')
 
 @section('title', 'Validasi Penarikan - Bank Sampah')
 
@@ -38,22 +38,22 @@
     @forelse($penarikanPending ?? [] as $penarikan)
     <tr id="row-{{ $penarikan->id }}">
         <td>{{ $penarikan->created_at->format('d/m/Y') }}</td>
-        
+
         {{-- PERBAIKAN 1: Gunakan 'name' (pakai 'e') --}}
         <td>{{ $penarikan->pelanggan->name ?? 'User Dihapus' }}</td>
-        
+
         <td>Rp {{ number_format($penarikan->jumlah, 0, ',', '.') }}</td>
-        
+
         {{-- PERBAIKAN 2: 'keterangan' diubah menjadi 'catatan' --}}
         <td>{{ $penarikan->catatan ?? '-' }}</td>
-        
+
         <td><span class="badge badge-warning">Pending</span></td>
         <td>
             {{-- PERBAIKAN 1: Gunakan 'name' (pakai 'e') --}}
             <button class="btn btn-success" onclick="approvePenarikan({{ $penarikan->id }}, '{{ $penarikan->pelanggan->name ?? 'User' }}', {{ $penarikan->jumlah }})">
                 ✓ Setujui
             </button>
-            
+
             {{-- PERBAIKAN 1: Gunakan 'name' (pakai 'e') --}}
             <button class="btn btn-danger" onclick="rejectPenarikan({{ $penarikan->id }}, '{{ $penarikan->pelanggan->name ?? 'User' }}')">
                 ✗ Tolak
@@ -154,10 +154,10 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 const form = document.getElementById('approveForm');
-                
+
                 // PERBAIKAN: Hapus '/petugas' dari URL
-                form.action = `/validasi/${id}/approve`; 
-                
+                form.action = `/validasi/${id}/approve`;
+
                 form.submit();
             }
         });
@@ -185,10 +185,10 @@
             if (result.isConfirmed && result.value) {
                 document.getElementById('alasanPenolakan').value = result.value;
                 const form = document.getElementById('rejectForm');
-                
+
                 // PERBAIKAN: Hapus '/petugas' dari URL
-                form.action = `/validasi/${id}/reject`; 
-                
+                form.action = `/validasi/${id}/reject`;
+
                 form.submit();
             }
         });

@@ -1,4 +1,4 @@
-@extends('admin-layouts.app')
+@extends('navbar.nav-admin')
 
 @section('title', 'Kelola User - Bank Sampah Admin')
 

@@ -26,7 +26,7 @@
                         </div>
                       @endif
     <div class="app-container">
-        @include('navbar.navigation')
+       @include('navbar.nav-pelanggan')
 
         @if(session('error') || $errors->any())
         <script>
