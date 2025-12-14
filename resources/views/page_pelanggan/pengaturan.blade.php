@@ -219,11 +219,16 @@
         @endif
     </div>
 
+    @if (session('error'))
+    <div class="alert alert-danger">{{ session('error') }} </div>
+    @elseif (session('success'))
+    <div class="alert alert-success">{{ session('success') }} </div>
+    @endif
 
 
 
 
-    
+
     <div class="app-container">
         @include('navbar.nav-pelanggan')
 
@@ -236,18 +241,33 @@
 
                 {{-- profile --}}
                 <div class="settings-card card-base">
+                    <form class="settings-form" action="{{ route('pelanggan.pengaturan.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                     <h3 class="section-title">Informasi Profile</h3>
                     <div class="profile-section">
                         <div class="profile-avatar-large">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                            @if($user->foto_profil)
+                                <img id="avatar-preview"
+                                     src="{{ asset('storage/' . $user->foto_profil) }}"
+                                     alt="Profile"
+                                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                <svg id="default-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            @else
+                                <svg id="default-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                <img id="avatar-preview" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @endif
                         </div>
-                        <button class="btn btn-secondary">Ubah Foto</button>
+                        <input type="file" id="avatar-input" name="foto_profil" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('avatar-input').click()">
+                            Ubah Foto
+                        </button>
                     </div>
 
-                    <form class="settings-form" action="{{ route('pelanggan.pengaturan.update') }}" method="POST">
-                        @csrf
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Nama Lengkap</label>
@@ -291,21 +311,6 @@
                                 <div>
                                     <p class="settings-item-title">Ubah Password</p>
                                     <p class="settings-item-desc">Perbarui password Anda secara berkala</p>
-                                </div>
-                            </div>
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-
-                        <button class="settings-item">
-                            <div class="settings-item-content">
-                                <svg class="settings-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                                <div>
-                                    <p class="settings-item-title">Verifikasi 2 Langkah</p>
-                                    <p class="settings-item-desc">Tingkatkan keamanan akun Anda</p>
                                 </div>
                             </div>
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -360,26 +365,7 @@
                     </div>
                 </div>
 
-                {{-- peringatan --}}
-                <div class="settings-card settings-card-danger card-base">
-                    <h3 class="section-title text-red-600">PERINGATAN</h3>
-                    <div class="settings-list">
-                        <button class="settings-item">
-                            <div class="settings-item-content">
-                                <svg class="settings-icon text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                                <div>
-                                    <p class="settings-item-title text-red-600">Hapus Akun</p>
-                                    <p class="settings-item-desc">Hapus akun Anda secara permanen</p>
-                                </div>
-                            </div>
-                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+
             </div>
         </main>
     </div>
@@ -399,28 +385,28 @@
                 </button>
             </div>
 
-            <form action="{{ route('pelanggan.pengaturan.update') }}" method="POST">
+            <form action="{{ route('pelanggan.password.update') }}" method="POST">
                 @csrf
-                
+
                 <div class="modal-form-group">
                     <label class="modal-form-label">
                         Password Lama <span class="required">*</span>
                     </label>
-                    <input type="password" name="current_password" class="modal-form-input" placeholder="Masukkan password lama" required>
+                    <input type="password" name="passwordSekarang" class="modal-form-input" placeholder="Masukkan password lama" required>
                 </div>
 
                 <div class="modal-form-group">
                     <label class="modal-form-label">
                         Password Baru <span class="required">*</span>
                     </label>
-                    <input type="password" name="new_password" class="modal-form-input" placeholder="Masukkan password baru" required>
+                    <input type="password" name="passwordBaru" class="modal-form-input" placeholder="Masukkan password baru">
                 </div>
 
                 <div class="modal-form-group">
                     <label class="modal-form-label">
                         Konfirmasi Password Baru <span class="required">*</span>
                     </label>
-                    <input type="password" name="new_password_confirmation" class="modal-form-input" placeholder="Ulangi password baru" required>
+                    <input type="password" name="konfirmasiPassword" class="modal-form-input" placeholder="Ulangi password baru">
                 </div>
 
                 <div class="password-requirements">

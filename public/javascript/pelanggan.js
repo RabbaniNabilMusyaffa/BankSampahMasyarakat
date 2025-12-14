@@ -475,7 +475,7 @@ function exportToCSV() {
         const rowData = [];
 
         cols.forEach((col, index) => {
-            
+
             if (index < cols.length - 1) {
                 rowData.push(col.textContent.trim());
             }
@@ -751,6 +751,27 @@ function enableAutoSave(formSelector) {
             }
         }, 500));
     });
+}
+
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('avatar-preview');
+    const defaultIcon = document.getElementById('default-icon');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            // 1. Masukkan gambar ke tag <img>
+            preview.src = e.target.result;
+            // 2. Tampilkan tag <img>
+            preview.style.display = 'block';
+            // 3. Sembunyikan icon default (orang)
+            if(defaultIcon) defaultIcon.style.display = 'none';
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
 
 // Initialize all tooltips on page load

@@ -61,9 +61,18 @@
 
         <div class="user-profile-card">
             <div class="user-avatar">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+                {{-- LOGIKA: Cek apakah user punya foto_profil --}}
+        @if(auth()->user()->foto_profil)
+        {{-- Tampilkan Foto dari Storage --}}
+        <img src="{{ asset('storage/' . auth()->user()->foto_profil) }}"
+             alt="Foto Profil"
+             style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+    @else
+        {{-- Tampilkan Icon Default jika belum ada foto --}}
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+    @endif
             </div>
             <div>
                 <p class="user-name">{{ auth()->user()->name ?? 'Budi Santoso' }}</p>

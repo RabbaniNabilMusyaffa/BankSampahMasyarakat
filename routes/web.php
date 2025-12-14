@@ -35,6 +35,7 @@ Route::middleware(['auth', 'Pelanggan'])->group(function () {
     Route::get('/riwayat', [App\Http\Controllers\PelangganController::class, 'riwayat'])->name('riwayat');
     Route::get('/pengaturan', [App\Http\Controllers\PelangganController::class, 'pengaturan'])->name('pengaturan');
     Route::post('/pengaturan/update', [App\Http\Controllers\PelangganController::class, 'updatePengaturan'])->name('pelanggan.pengaturan.update');
+    Route::post('/password/update', [App\Http\Controllers\PelangganController::class, 'updatePassword'])->name('pelanggan.password.update');
     Route::post('/pengajuan', [PelangganController::class, 'ajukanPenarikan'])->name('pengajuan');
 });
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Models\SaldoPelanggan;
 use App\Models\TransaksiSetor;
 use App\Models\TransaksiTarik;
@@ -141,7 +143,7 @@ class PelangganController extends Controller
         return view('page_pelanggan.pengaturan', compact('user'));
     }
 
-    
+
     public function updatePengaturan(Request $request)
     {
         $user = Auth::user();
@@ -151,14 +153,53 @@ class PelangganController extends Controller
             'phone' => 'nullable',
             'date' => 'nullable',
             'address' => 'nullable',
+            'foto_profil'=> 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->date = $request->date;
-        $user->address = $request->address;
+        if ($request->filled('name')) {
+            $user->name = $request->name;
+        }
+
+        if ($request->filled('email')) {
+            $user->email = $request->email;
+        }
+
+        if ($request->filled('phone')) {
+            $user->phone = $request->phone;
+        }
+
+        if ($request->filled('date')) {
+            $user->date = $request->date;
+        }
+
+        if ($request->filled('address')) {
+            $user->address = $request->address;
+        }
+
+        if ($request->hasFile('foto_profil')) {
+            if ($user->foto_profil && Storage::disk('public')->exists($user->foto_profil)) {
+                Storage::disk('public')->delete($user->foto_profil);
+            }
+            $path = $request->file('foto_profil')->store('foto_profil', 'public');
+            $user->foto_profil = $path;
+        }
+
         $user->save();
         return redirect()->route('pengaturan')->with('success', 'Profile berhasil diperbarui.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        if(!Hash::check($request->passwordSekarang, auth()->user()->password)) {
+            return back()->with('error', 'Password lama tidak cocok');
+        }
+        if($request->passwordBaru != $request->konfirmasiPassword) {
+            return back()->with('error', 'Password baru dan konfirmasi password tidak cocok');
+        }
+        auth()->user()->update([
+            'password'=> Hash::make($request->passwordBaru)
+        ]);
+
+        return back()->with('success', 'Password berhasil diperbarui');
     }
 }
