@@ -173,7 +173,6 @@
                     </div>
 
                     {{-- penarikan --}}
-                    {{-- Ganti seluruh blok <div class="transaction-card card-base"> untuk Penarikan --}}
 <div class="transaction-card card-base">
     <div class="transaction-header">
         <h3 class="transaction-title">

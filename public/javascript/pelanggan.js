@@ -692,12 +692,16 @@ function confirmDialog(message, onConfirm, onCancel) {
     });
 }
 
-// Initialize Tooltips
 function initTooltips() {
     const elements = document.querySelectorAll('[data-tooltip]');
+    const sidebar = document.getElementById('sidebar'); // Ambil elemen sidebar
 
     elements.forEach(element => {
         element.addEventListener('mouseenter', function() {
+            if (!sidebar || !sidebar.classList.contains('collapsed')) {
+                return;
+            }
+
             const text = this.getAttribute('data-tooltip');
             const tooltip = document.createElement('div');
             tooltip.className = 'custom-tooltip';
@@ -712,13 +716,19 @@ function initTooltips() {
                 white-space: nowrap;
                 z-index: 10000;
                 pointer-events: none;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             `;
 
             document.body.appendChild(tooltip);
 
             const rect = this.getBoundingClientRect();
-            tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
-            tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
+
+            // Posisi tooltip di sebelah kanan icon
+            const topPos = rect.top + (rect.height / 2) - (tooltip.offsetHeight / 2);
+            const leftPos = rect.right + 10; // Beri jarak 10px dari kanan sidebar
+
+            tooltip.style.top = `${topPos}px`;
+            tooltip.style.left = `${leftPos}px`;
 
             this.tooltipElement = tooltip;
         });
@@ -773,11 +783,6 @@ function previewImage(event) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-
-// Initialize all tooltips on page load
-window.addEventListener('load', () => {
-    initTooltips();
-});
 
 // Handle Network Status
 window.addEventListener('online', () => {
