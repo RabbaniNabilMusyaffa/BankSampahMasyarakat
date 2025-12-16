@@ -66,7 +66,7 @@
         {{-- Tampilkan Foto dari Storage --}}
         <img src="{{ asset('storage/' . auth()->user()->foto_profil) }}"
              alt="Foto Profil"
-             style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+             style="width: 100%; height: 100%; object-fit: center; border-radius: 50%;">
     @else
         {{-- Tampilkan Icon Default jika belum ada foto --}}
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

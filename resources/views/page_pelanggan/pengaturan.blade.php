@@ -219,15 +219,31 @@
         @endif
     </div>
 
-    @if (session('error'))
-    <div class="alert alert-danger">{{ session('error') }} </div>
-    @elseif (session('success'))
-    <div class="alert alert-success">{{ session('success') }} </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Cek Session Success
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            showConfirmButton: false,
+            timer: 2000 // Pop up hilang otomatis dalam 2 detik
+        });
     @endif
 
-
-
-
+    // Cek Session Error
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "{{ session('error') }}",
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Tutup'
+        });
+    @endif
+</script>
 
     <div class="app-container">
         @include('navbar.nav-pelanggan')
