@@ -37,6 +37,7 @@ Route::middleware(['auth', 'Pelanggan'])->group(function () {
     Route::post('/pengaturan/update', [App\Http\Controllers\PelangganController::class, 'updatePengaturan'])->name('pelanggan.pengaturan.update');
     Route::post('/password/update', [App\Http\Controllers\PelangganController::class, 'updatePassword'])->name('pelanggan.password.update');
     Route::post('/pengajuan', [PelangganController::class, 'ajukanPenarikan'])->name('pengajuan');
+    Route::post('/update-notif', [PelangganController::class, 'updateNotifikasi'])->name('pelanggan.update.notif');
 });
 
 Route::middleware(['auth', 'Admin'])->group(function () {

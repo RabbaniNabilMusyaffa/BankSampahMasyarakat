@@ -10,6 +10,7 @@ use App\Models\DetailTransaksiSetor;
 use App\Models\KategoriSampah;
 use App\Models\User;
 use App\Models\SaldoPelanggan;
+use App\Notifications\NotifikasiPenarikan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -226,7 +227,7 @@ class PetugasController extends Controller
         $riwayatValidasi = TransaksiTarik::whereIn('status', ['approved', 'rejected'])
             ->with(['pelanggan', 'validator'])
             ->orderBy('tanggal_validasi', 'desc')
-            ->paginate(10); 
+            ->paginate(10);
 
         return view('page_petugas/validasi', compact('penarikanPending', 'riwayatValidasi'));
     }
@@ -257,6 +258,11 @@ class PetugasController extends Controller
             $transaksi->tanggal_validasi = Carbon::now();
             $transaksi->save();
 
+            $pelanggan = User::find($transaksi->user_id);
+            if($pelanggan && $pelanggan->notif_penarikan) {
+            $pesan = "Penarikan dana Rp " . number_format($transaksi->jumlah) . " berhasil disetujui!";
+            $pelanggan->notify(new NotifikasiPenarikan($pesan, 'success'));
+            }
             // 5. Jika semua berhasil, commit
             DB::commit();
 
@@ -287,6 +293,11 @@ class PetugasController extends Controller
             $transaksi->alasan_penolakan = $request->alasan_penolakan;
             $transaksi->save();
 
+            $pelanggan = User::find($transaksi->user_id);
+            if($pelanggan && $pelanggan->notif_penarikan) {
+            $pesan = "Penarikan dana ditolak. Alasan: " . $request->alasan_penolakan;
+            $pelanggan->notify(new NotifikasiPenarikan($pesan, 'error'));
+            }
             // Tidak perlu DB Transaction karena tidak mengubah saldo
 
             return redirect()->route('petugas.validasi')->with('success', 'Penarikan telah ditolak.');

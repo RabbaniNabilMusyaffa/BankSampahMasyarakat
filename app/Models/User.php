@@ -66,10 +66,6 @@ class User extends Authenticatable
     }
 
     // Relasi ke Notifikasi
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
 
     // Relasi ke Activity Logs
     public function activityLogs()

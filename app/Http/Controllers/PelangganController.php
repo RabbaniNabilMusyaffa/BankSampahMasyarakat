@@ -202,4 +202,14 @@ class PelangganController extends Controller
 
         return back()->with('success', 'Password berhasil diperbarui');
     }
+
+    public function updateNotifikasi(Request $request)
+    {
+    $user = Auth::user();
+    // Update kolom di database
+    $user->notif_penarikan = $request->notif_penarikan;
+    $user->save();
+
+    return response()->json(['success' => true]);
+    }
 }

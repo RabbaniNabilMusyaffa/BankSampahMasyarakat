@@ -228,5 +228,39 @@
     </div>
 
     <script src="{{ asset('javascript/pelanggan.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Konfigurasi Toast ala WhatsApp (Muncul di atas, hilang sendiri)
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end', // Muncul di pojok kanan atas
+        showConfirmButton: false,
+        timer: 4000, // Muncul selama 4 detik
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+
+{{-- Cek apakah ada Notifikasi Database yang belum dibaca --}}
+@if(auth()->check() && auth()->user()->unreadNotifications->count() > 0)
+    @foreach(auth()->user()->unreadNotifications as $notification)
+        <script>
+            Toast.fire({
+                icon: '{{ $notification->data['status'] }}', // icon success atau error
+                title: 'Notifikasi Baru',
+                text: '{{ $notification->data['pesan'] }}'
+            });
+        </script>
+
+        {{-- Tandai notifikasi sebagai sudah dibaca agar tidak muncul terus --}}
+        @php $notification->markAsRead(); @endphp
+    @endforeach
+@endif
+
 </body>
 </html>

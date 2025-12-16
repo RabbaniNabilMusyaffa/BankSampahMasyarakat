@@ -346,24 +346,15 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
                                 <div>
-                                    <p class="settings-item-title">Setoran Berhasil</p>
-                                    <p class="settings-item-desc">Notifikasi saat setoran diproses</p>
-                                </div>
-                            </div>
-                            <input type="checkbox" checked class="toggle-input">
-                        </label>
-
-                        <label class="settings-toggle">
-                            <div class="settings-item-content">
-                                <svg class="settings-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
-                                <div>
                                     <p class="settings-item-title">Penarikan Dana</p>
                                     <p class="settings-item-desc">Notifikasi status penarikan</p>
                                 </div>
                             </div>
-                            <input type="checkbox" checked class="toggle-input">
+                            <input type="checkbox"
+                            class="toggle-input"
+                            id="toggle-penarikan"
+                            onchange="updateNotifikasiPreference(this)"
+                            {{ auth()->user()->notif_penarikan ? 'checked' : '' }}>
                         </label>
 
                         <label class="settings-toggle">
@@ -478,6 +469,77 @@
                 closePasswordModal();
             }
         });
+
+        function updateNotifikasiPreference(element) {
+        // Cek apakah dicentang atau tidak
+        let status = element.checked ? 1 : 0;
+
+        // Kirim ke server menggunakan Fetch API
+        fetch('{{ route("pelanggan.update.notif") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                notif_penarikan: status
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                // Opsional: Tampilkan toast kecil bahwa pengaturan tersimpan
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Pengaturan notifikasi disimpan'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Kembalikan posisi toggle jika gagal
+            element.checked = !element.checked;
+        });
+    }
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Konfigurasi Toast ala WhatsApp (Muncul di atas, hilang sendiri)
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end', // Muncul di pojok kanan atas
+        showConfirmButton: false,
+        timer: 4000, // Muncul selama 4 detik
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+
+{{-- Cek apakah ada Notifikasi Database yang belum dibaca --}}
+@if(auth()->check() && auth()->user()->unreadNotifications->count() > 0)
+    @foreach(auth()->user()->unreadNotifications as $notification)
+        <script>
+            Toast.fire({
+                icon: '{{ $notification->data['status'] }}', // icon success atau error
+                title: 'Notifikasi Baru',
+                text: '{{ $notification->data['pesan'] }}'
+            });
+        </script>
+
+        {{-- Tandai notifikasi sebagai sudah dibaca agar tidak muncul terus --}}
+        @php $notification->markAsRead(); @endphp
+    @endforeach
+@endif
 </body>
 </html>
